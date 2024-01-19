@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/01/16 14:58:43 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/01/19 17:20:22 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ NAME			= ircserv
 
 SRC_DIR			= ./srcs/
 SRCS			= Utils.cpp \
+				  User.cpp \
 				  Server.cpp \
 				  main.cpp \
 

@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/16 17:21:02 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:47:30 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,28 @@
 
 # include "IRCDepends.hpp"
 
+class User;
+
 class Server {
 
 	private:
 		/* Attributes */
-		std::vector<pollfd>	_polls;
-		std::string			_hostname;
-		std::string			_password;
-		int					_port;
-		int					_listenerSocket;
+		std::vector<pollfd>		_polls;
+		std::map<int, User>		_users;
+		std::string				_hostname;
+		std::string				_password;
+		int						_port;
+		int						_listenerSocket;
 
 		/* Private constructor */
 		Server(void);
 
 		/* Private functions */
-		int	_createSocket(void);
+		int		_createSocket(void);
+		bool	_createUserConnection(void);
+		bool	_handleUserConnection(std::vector<pollfd>::iterator &it);
+		void	_addUser(int userSocket, struct sockaddr_in userAddr);
+		void	_removeUser(int currentFd, std::vector<pollfd>::iterator &it);
 
 	public:
 		/* Constructors & Destructors */
@@ -39,6 +46,7 @@ class Server {
 
 		/* Functions */
 		void	run(void);
+		User	*findUserByFd(int fd);
 
 		/* Getters & Setters */
 		std::string	getHostname(void) const;
