@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/19 17:47:30 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:42:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "IRCDepends.hpp"
 
+/*
+ * Soft-depending User class.
+ */
 class User;
 
 class Server {
@@ -23,6 +26,7 @@ class Server {
 		/* Attributes */
 		std::vector<pollfd>		_polls;
 		std::map<int, User>		_users;
+		std::string				_creationDate;
 		std::string				_hostname;
 		std::string				_password;
 		int						_port;
@@ -32,11 +36,14 @@ class Server {
 		Server(void);
 
 		/* Private functions */
-		int		_createSocket(void);
-		bool	_createUserConnection(void);
-		bool	_handleUserConnection(std::vector<pollfd>::iterator &it);
-		void	_addUser(int userSocket, struct sockaddr_in userAddr);
-		void	_removeUser(int currentFd, std::vector<pollfd>::iterator &it);
+		std::string	_createTimestamp(void);
+		int			_createSocket(void);
+		bool		_createUserConnection(void);
+		bool		_handleUserConnection(std::vector<pollfd>::iterator &it);
+		bool		_handlePollOut(std::vector<pollfd>::iterator &it);
+		void		_addUser(int userSocket, struct sockaddr_in userAddr);
+		void		_removeUser(int currentFd, std::vector<pollfd>::iterator &it);
+		void		_parseReceived(int fd, std::string message);
 
 	public:
 		/* Constructors & Destructors */
@@ -49,6 +56,7 @@ class Server {
 		User	*findUserByFd(int fd);
 
 		/* Getters & Setters */
+		std::string	getCreationDate(void) const;
 		std::string	getHostname(void) const;
 		std::string	getPassword(void) const;
 		int			getPort(void) const;
