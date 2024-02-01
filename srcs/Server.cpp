@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/29 20:06:25 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:17:58 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ Server::Server(const std::string &hostname, int port, const std::string &passwor
 	this->_password = password;
 	this->_polls.reserve(MAX_CONNECTIONS);
 	this->_listenerSocket = _createSocket();
-
-	std::cout << "[Server] New object." << std::endl;
 }
 
 Server::Server(const Server &origin) {
@@ -31,7 +29,7 @@ Server::Server(const Server &origin) {
 }
 
 Server::~Server(void) {
-	std::cout << "[Server] Deleted object." << std::endl;
+	g_server_running = false;
 }
 
 /* Private functions */
@@ -82,29 +80,29 @@ bool	Server::_createUserConnection(void) {
 
 bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 	User		*user = findUserByFd(it->fd);
-	std::string	stringifiedMessage;
 	std::string	delimiter = "\r\n";
-	char		message[4096];
+	std::string	message;
+	char		buffer[4096];
 	int			read;
 
-	memset(message, 0, sizeof(message));
-	read = recv(it->fd, message, 4096, 0);
+	memset(buffer, 0, sizeof(buffer));
+	read = recv(it->fd, buffer, 4096, 0);
 	if (read < 0) {
-		std::cerr << "[Server] An error occurred with recv(), ignoring..." << std::endl;
+		std::cerr << Utils::toString(SERVER_PREFIX) << CRESET "An error occurred with recv(), ignoring..." CRESET << std::endl;
 		this->_removeUser(it->fd, it);
 		return (false);
 	}
 	if (read == 0) {
 		// User disconnected
-		std::cout << "[Server] Disconnection event fired!" << std::endl;
+		std::cout << Utils::toString(SERVER_PREFIX) << "Disconnection event fired!" << std::endl;
 		this->_removeUser(it->fd, it);
 		return (false);
 	}
-	stringifiedMessage = Utils::toString(message);
-	stringifiedMessage.replace(stringifiedMessage.find("\n"), delimiter.size(), delimiter);
-	std::cout << "[Server] From " << it->fd << ": '" << stringifiedMessage << "'" << std::endl;
+	message = Utils::toString(buffer);
+	message.replace(message.find("\n"), delimiter.size(), delimiter);
+	std::cout << Utils::toString(SERVER_PREFIX) << "From " << it->fd << ": '" << message << "'" << std::endl;
 	// Should handle commands from here
-	user->setReadBuffer(stringifiedMessage);
+	user->setReadBuffer(message);
 	this->_parseReceived(it->fd, user->getReadBuffer()); // command handler inside this function
 	return (true);
 }
@@ -127,15 +125,15 @@ void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
 	userPoll.events = POLLIN | POLLOUT;
 	this->_polls.push_back(userPoll);
 	this->_users.insert(std::pair<int, User>(userSocket, userObj));
-	std::cout << "[Server] New client with id " << userSocket << "..." << std::endl;
+	std::cout << Utils::toString(SERVER_PREFIX) << "New client with id " << userSocket << "..." << std::endl;
 }
 
 void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 	if (close(currentFd) < 0)
-		std::cerr << "[Server] close() error when removing user, continue..." << std::endl;
+		std::cerr << Utils::toString(SERVER_PREFIX) << BRED "close() error when removing user, continue..." CRESET << std::endl;
 	this->_users.erase(currentFd);
 	this->_polls.erase(it);
-	std::cout << "[Server] Bye client with id " << currentFd << "." << std::endl;
+	std::cout << Utils::toString(SERVER_PREFIX) << "Bye client with id " << currentFd << "." << std::endl;
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
@@ -149,7 +147,7 @@ void	Server::_parseReceived(int fd, std::string message) {
 			if (user->isRegistered())
 				continue; // should exec other commands
 			user->tryRegister(this);
-			std::cout << "[Server] Potential command '" << commands[i] << "'" << std::endl;
+			std::cout << Utils::toString(SERVER_PREFIX) << "Potential command '" << commands[i] << "'" << std::endl;
 		}
 	}
 	if (user->getReadBuffer().find("\r\n"))
@@ -158,17 +156,22 @@ void	Server::_parseReceived(int fd, std::string message) {
 
 /* Functions */
 void	Server::run(void) {
-	pollfd	serverPoll = {this->_listenerSocket, POLLIN, 0};
+	pollfd	serverPoll = {
+		this->_listenerSocket, // specifies the file descriptor to monitor
+		POLLIN | POLLOUT, // Data available to read & Writing now will not block
+		0 // indicate which of those events actually occurred
+	};
 
-	if (fcntl(this->_listenerSocket, F_SETFL, O_NONBLOCK) < 0) // macOS?
+	if (fcntl(this->_listenerSocket, F_SETFL, O_NONBLOCK) < 0) // non-blocking socket
 		throw std::runtime_error("Cannot manipulate fd");
 	this->_polls.push_back(serverPoll);
-	std::cout << "Server is ready!" << std::endl;
-	while ("please work server") { // should probably use a boolean
+	g_server_running = true;
+	std::cout << Utils::toString(SERVER_PREFIX) << "Ready to welcome users!" << std::endl;
+	while (g_server_running) {
 		std::vector<pollfd>::iterator	it = this->_polls.begin();
 		int pollCount = poll(&(*it), this->_polls.size(), -1);
 
-		if (pollCount < 0)
+		if (g_server_running && pollCount < 0)
 			throw std::runtime_error("Impossible to wait for some event");
 		while (it != this->_polls.end()) {
 			if (it->revents & POLLIN) {
@@ -187,6 +190,7 @@ void	Server::run(void) {
 			++it;
 		}
 	}
+	std::cout << Utils::toString(SERVER_PREFIX) << "Server is shutting down..." << std::endl;
 }
 
 User	*Server::findUserByFd(int fd) {
@@ -220,6 +224,6 @@ int	Server::getListenerSocket(void) const {
 
 /* Overloaded operators */
 Server	&Server::operator=(const Server &origin) {
-	(void) origin;
+	(void) origin; // should complete this
 	return (*this);
 }

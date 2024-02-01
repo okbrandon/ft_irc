@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/29 19:42:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:14:59 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define SERVER_HPP
 
 # include "IRCDepends.hpp"
+
+// Retreiving global variable from main
+extern bool	g_server_running;
 
 /*
  * Soft-depending User class.
@@ -52,8 +55,8 @@ class Server {
 		~Server(void);
 
 		/* Functions */
-		void	run(void);
-		User	*findUserByFd(int fd);
+		void		run(void);	
+		User		*findUserByFd(int fd);
 
 		/* Getters & Setters */
 		std::string	getCreationDate(void) const;

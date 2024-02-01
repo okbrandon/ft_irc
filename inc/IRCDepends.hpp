@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/29 19:40:17 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:10:21 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,23 @@
 # include <fcntl.h>
 # include <poll.h>
 # include <unistd.h>
+# include <signal.h>
 
 # include "IRCNumReplies.hpp"
 # include "Utils.hpp"
 # include "User.hpp"
 # include "Server.hpp"
 
+# define BRED	"\033[1;31m"
+# define BGRN	"\033[1;32m"
+# define BYEL	"\033[1;33m"
+# define BBLU	"\033[1;34m"
+# define BMAG	"\033[1;35m"
+# define BCYN	"\033[1;36m"
+# define BWHT	"\033[1;37m"
+# define CRESET	"\033[0m"
+
 # define MAX_CONNECTIONS    10
+# define SERVER_PREFIX      BCYN "[Server] " CRESET
 
 #endif

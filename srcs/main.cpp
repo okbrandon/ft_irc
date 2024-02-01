@@ -6,11 +6,14 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:52:31 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/16 17:37:56 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:20:10 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCDepends.hpp"
+
+// Global attribute that handles the server status
+bool	g_server_running = false;
 
 bool	_isPortValid(char *port) {
 	std::string	portAsString = Utils::toString(port);
@@ -23,6 +26,12 @@ bool	_isPortValid(char *port) {
 	// Extracting port
 	int num = Utils::stoi(portAsString);
 	return (num > 0 && num < 65535);
+}
+
+void	_handleSignal(int signal) {
+	g_server_running = false;
+	std::cout << Utils::toString(SERVER_PREFIX) << "bai bai :c" << std::endl;
+	(void) signal;
 }
 
 int	main(int argc, char **argv) {
@@ -39,11 +48,15 @@ int	main(int argc, char **argv) {
 		std::string	portAsString = Utils::toString(argv[1]);
 		int port = Utils::stoi(portAsString);
 
-		std::cout << "Should be fine." << std::endl;
-		// Run server
+		std::cout << BGRN "Should be fine." CRESET << std::endl;
+		// Handling signals
+		signal(SIGINT, _handleSignal);
+		signal(SIGQUIT, _handleSignal);
+		// Starting server
 		Server	ircServer("127.0.0.1", port, password);
 		ircServer.run();
 	} catch (std::exception &exception) {
+		std::cerr << Utils::toString(SERVER_PREFIX) << "Exception caught!" << std::endl;
 		std::cerr << exception.what() << std::endl;
 	}
 	return (0);
