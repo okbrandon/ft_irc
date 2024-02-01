@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/01/19 17:20:22 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/02/01 18:38:31 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_DIR			= ./srcs/
 SRCS			= Utils.cpp \
 				  User.cpp \
 				  Server.cpp \
+				  ACommand.cpp \
 				  main.cpp \
 
 OBJ_DIR			= ./objs/

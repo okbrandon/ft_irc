@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:40:51 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:31:31 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <cstring>
 # include <map>
 # include <vector>
+# include <list>
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <netinet/in.h>
@@ -28,6 +29,7 @@
 # include <poll.h>
 # include <unistd.h>
 # include <signal.h>
+# include <stddef.h>
 
 # include "IRCNumReplies.hpp"
 # include "Utils.hpp"
