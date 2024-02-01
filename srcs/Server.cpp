@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:17:58 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:32:32 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,19 @@ void	Server::run(void) {
 			++it;
 		}
 	}
+	this->broadcast("Server closed");
 	std::cout << Utils::toString(SERVER_PREFIX) << "Server is shutting down..." << std::endl;
+}
+
+void	Server::broadcast(std::string message) {
+	message = message.append("\r\n");
+
+	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+		User	user = it->second;
+
+		user.addSendBuffer(message);
+		user.sendBufferMessage();
+	}
 }
 
 User	*Server::findUserByFd(int fd) {
