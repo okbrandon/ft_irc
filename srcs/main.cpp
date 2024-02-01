@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:52:31 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:20:10 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:41:59 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	_isPortValid(char *port) {
 
 void	_handleSignal(int signal) {
 	g_server_running = false;
-	std::cout << Utils::toString(SERVER_PREFIX) << "bai bai :c" << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "bai bai :c" << std::endl;
 	(void) signal;
 }
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv) {
 		Server	ircServer("127.0.0.1", port, password);
 		ircServer.run();
 	} catch (std::exception &exception) {
-		std::cerr << Utils::toString(SERVER_PREFIX) << "Exception caught!" << std::endl;
+		std::cerr << Utils::toString(SERVER_KO) << "Exception caught!" << std::endl;
 		std::cerr << exception.what() << std::endl;
 	}
 	return (0);

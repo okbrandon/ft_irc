@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:23:18 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:46:23 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ class Server {
 		~Server(void);
 
 		/* Functions */
-		void	run(void);	
+		void	run(void);
 		void	broadcast(std::string message);
 		User	*findUserByFd(int fd);
 

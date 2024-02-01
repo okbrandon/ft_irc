@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:32:32 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:05:10 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ Server::Server(const Server &origin) {
 
 Server::~Server(void) {
 	g_server_running = false;
+	while (!this->_polls.empty())
+		this->_polls.pop_back();
+	while (!this->_users.empty())
+		this->_users.erase(this->_users.begin());
+	this->_polls.clear();
+	this->_users.clear();
 }
 
 /* Private functions */
@@ -88,19 +94,19 @@ bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 	memset(buffer, 0, sizeof(buffer));
 	read = recv(it->fd, buffer, 4096, 0);
 	if (read < 0) {
-		std::cerr << Utils::toString(SERVER_PREFIX) << CRESET "An error occurred with recv(), ignoring..." CRESET << std::endl;
+		std::cerr << Utils::toString(SERVER_KO) << CRESET "An error occurred with recv(), ignoring..." CRESET << std::endl;
 		this->_removeUser(it->fd, it);
 		return (false);
 	}
 	if (read == 0) {
 		// User disconnected
-		std::cout << Utils::toString(SERVER_PREFIX) << "Disconnection event fired!" << std::endl;
+		std::cout << Utils::toString(SERVER_INFO) << "Disconnection event fired!" << std::endl;
 		this->_removeUser(it->fd, it);
 		return (false);
 	}
 	message = Utils::toString(buffer);
 	message.replace(message.find("\n"), delimiter.size(), delimiter);
-	std::cout << Utils::toString(SERVER_PREFIX) << "From " << it->fd << ": '" << message << "'" << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "From " << it->fd << ": " << message << std::endl;
 	// Should handle commands from here
 	user->setReadBuffer(message);
 	this->_parseReceived(it->fd, user->getReadBuffer()); // command handler inside this function
@@ -125,29 +131,31 @@ void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
 	userPoll.events = POLLIN | POLLOUT;
 	this->_polls.push_back(userPoll);
 	this->_users.insert(std::pair<int, User>(userSocket, userObj));
-	std::cout << Utils::toString(SERVER_PREFIX) << "New client with id " << userSocket << "..." << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "New client with id " << userSocket << "..." << std::endl;
 }
 
 void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 	if (close(currentFd) < 0)
-		std::cerr << Utils::toString(SERVER_PREFIX) << BRED "close() error when removing user, continue..." CRESET << std::endl;
+		std::cerr << Utils::toString(SERVER_KO) << BRED "close() error when removing user, continue..." CRESET << std::endl;
 	this->_users.erase(currentFd);
 	this->_polls.erase(it);
-	std::cout << Utils::toString(SERVER_PREFIX) << "Bye client with id " << currentFd << "." << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "Bye client with id " << currentFd << "." << std::endl;
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
 	std::vector<std::string>	commands;
-	User	*user = findUserByFd(fd);
+	User						*user = findUserByFd(fd);
 
 	if (message.find("\r\n") != std::string::npos) {
 		commands = Utils::getSplittedMessage(message);
 
 		for (size_t i = 0; i != commands.size(); i++) {
+			if (commands[i] == "\r\n")
+				continue ;
+			std::cout << Utils::toString(SERVER_INFO) << "Potential command " << commands[i] << std::endl;
 			if (user->isRegistered())
 				continue; // should exec other commands
 			user->tryRegister(this);
-			std::cout << Utils::toString(SERVER_PREFIX) << "Potential command '" << commands[i] << "'" << std::endl;
 		}
 	}
 	if (user->getReadBuffer().find("\r\n"))
@@ -166,7 +174,7 @@ void	Server::run(void) {
 		throw std::runtime_error("Cannot manipulate fd");
 	this->_polls.push_back(serverPoll);
 	g_server_running = true;
-	std::cout << Utils::toString(SERVER_PREFIX) << "Ready to welcome users!" << std::endl;
+	std::cout << Utils::toString(SERVER_OK) << "Ready to welcome users!" << std::endl;
 	while (g_server_running) {
 		std::vector<pollfd>::iterator	it = this->_polls.begin();
 		int pollCount = poll(&(*it), this->_polls.size(), -1);
@@ -191,7 +199,7 @@ void	Server::run(void) {
 		}
 	}
 	this->broadcast("Server closed");
-	std::cout << Utils::toString(SERVER_PREFIX) << "Server is shutting down..." << std::endl;
+	std::cout << Utils::toString(SERVER_KO) << "Server is shutting down..." << std::endl;
 }
 
 void	Server::broadcast(std::string message) {
@@ -236,6 +244,12 @@ int	Server::getListenerSocket(void) const {
 
 /* Overloaded operators */
 Server	&Server::operator=(const Server &origin) {
-	(void) origin; // should complete this
+	this->_polls = origin._polls;
+	this->_users = origin._users;
+	this->_creationDate = origin._creationDate;
+	this->_hostname = origin._hostname;
+	this->_password = origin._password;
+	this->_port = origin._port;
+	this->_listenerSocket = origin._listenerSocket;
 	return (*this);
 }

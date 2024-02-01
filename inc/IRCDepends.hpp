@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:10:21 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:40:51 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define CRESET	"\033[0m"
 
 # define MAX_CONNECTIONS    10
-# define SERVER_PREFIX      BCYN "[Server] " CRESET
+# define SERVER_OK          BGRN "[Server] " CRESET
+# define SERVER_INFO        BYEL "[Server] " CRESET
+# define SERVER_KO          BRED "[Server] " CRESET
 
 #endif
