@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.hpp                                          :+:      :+:    :+:   */
+/*   PassCommand.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 14:17:56 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 10:53:15 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/02/02 09:49:44 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/02/02 14:05:22 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef PASSCOMMAND_HPP
+# define PASSCOMMAND_HPP
 
 # include "IRCDepends.hpp"
 
-class Utils {
-
-	private:	
+class PassCommand : public ACommand {
 
 	public:
-		static int								stoi(std::string &s);
-		static std::deque<std::string>			getSplittedMessage(std::string &message);
-		template <class T> static std::string	toString(const T &value) {
-			std::ostringstream oss;
+		PassCommand(void);
+		~PassCommand(void);
 
-			oss << value;
-			return (oss.str());
-		}
+		void	execute(void) const;
 
 };
 

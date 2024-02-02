@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:13 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 18:37:01 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 13:55:28 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,21 @@
 class ACommand {
 
 	protected:
-		std::string				_name;
-		std::list<std::string>	_args;
-		User					*_user;
-		Server					*_server;
+		std::string					_name;
+		std::deque<std::string>		_args;
+		User						*_user;
+		Server						*_server;
+		
+		ACommand(void);
 
 	public:
-		ACommand(void);
+		ACommand(std::string name);
 		ACommand(ACommand const &origin);
 		virtual ~ACommand(void);
 
 		std::string	getName(void) const;
 
-		void	setArgs(std::list<std::string> args);
+		void	setArgs(std::deque<std::string> args);
 		void	setUser(User *user);
 		void	setServer(Server *server);
 

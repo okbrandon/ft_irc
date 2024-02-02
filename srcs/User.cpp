@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:27:37 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:53:35 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ void	User::setNickname(std::string const &nickname) {
 
 void	User::setUsername(std::string const &username) {
 	this->_username = username;
+}
+
+void	User::setSentPassword(bool didSend) {
+	this->_sentPassword = didSend;
 }
 
 void	User::setReadBuffer(std::string const &buffer) {

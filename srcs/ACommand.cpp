@@ -6,14 +6,16 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 18:38:03 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 10:52:56 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ACommand.hpp"
 
-ACommand::ACommand(void) {
-	this->_name = "";
+ACommand::ACommand(void) {}
+
+ACommand::ACommand(std::string name) {
+	this->_name = name;
 	this->_user = NULL;
 	this->_server = NULL;
 }
@@ -24,7 +26,7 @@ ACommand::ACommand(ACommand const &origin) {
 
 ACommand::~ACommand(void) {
 	while (!this->_args.empty())
-		this->_args.pop_front();
+		this->_args.erase(this->_args.begin());
 	this->_args.clear();
 }
 
@@ -32,7 +34,7 @@ std::string	ACommand::getName(void) const {
 	return (this->_name);
 }
 
-void	ACommand::setArgs(std::list<std::string> args) {
+void	ACommand::setArgs(std::deque<std::string> args) {
 	this->_args = args;
 }
 

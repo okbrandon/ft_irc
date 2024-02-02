@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 17:46:23 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 10:58:02 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ extern bool	g_server_running;
  */
 class User;
 
+/*
+ * Soft-depending Executor class.
+ */
+class Executor;
+
 class Server {
 
 	private:
@@ -34,6 +39,7 @@ class Server {
 		std::string				_password;
 		int						_port;
 		int						_listenerSocket;
+		Executor				*_executor;
 
 		/* Private constructor */
 		Server(void);

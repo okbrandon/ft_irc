@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 09:42:36 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:00:50 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <algorithm>
 # include <map>
 # include <vector>
+# include <deque>
 # include <list>
 # include <sys/socket.h>
 # include <sys/types.h>
@@ -36,6 +37,8 @@
 # include "Utils.hpp"
 # include "User.hpp"
 # include "Server.hpp"
+# include "ACommand.hpp"
+# include "Executor.hpp"
 
 # define BRED	"\033[1;31m"
 # define BGRN	"\033[1;32m"

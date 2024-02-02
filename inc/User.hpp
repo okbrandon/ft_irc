@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:57:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/29 19:42:58 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:53:25 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class User {
 		bool		hasSentPassword(void) const;
 		void		setNickname(std::string const &nickname);
 		void		setUsername(std::string const &username);
+		void		setSentPassword(bool didSend);
 		void		setReadBuffer(std::string const &buffer);
 		void		setSendBuffer(std::string const &buffer);
 		void		addSendBuffer(std::string buffer);

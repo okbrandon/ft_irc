@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 09:46:33 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:43:16 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Server::Server(const std::string &hostname, int port, const std::string &passwor
 	this->_password = password;
 	this->_polls.reserve(MAX_CONNECTIONS);
 	this->_listenerSocket = _createSocket();
+	this->_executor = new Executor(this);
 }
 
 Server::Server(const Server &origin) {
@@ -106,7 +107,7 @@ bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 	}
 	message = Utils::toString(buffer);
 	message.replace(message.find("\n"), delimiter.size(), delimiter);
-	std::cout << Utils::toString(SERVER_INFO) << "From " << it->fd << ": " << message << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "From " << it->fd << ": " << message;
 	// Should handle commands from here
 	user->setReadBuffer(message);
 	this->_parseReceived(it->fd, user->getReadBuffer()); // command handler inside this function
@@ -143,20 +144,22 @@ void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
-	std::vector<std::string>	commandArgs;
-	User						*user = findUserByFd(fd);
+	std::deque<std::string>	commandArgs;
+	User					*user = findUserByFd(fd);
+	size_t					pos = message.find("\r\n");
 
-	if (message.find("\r\n") != std::string::npos) {
+	if (pos > 0 && message.find("\r\n") != std::string::npos) {
 		commandArgs = Utils::getSplittedMessage(message);
 
-		for (size_t i = 0; i != commandArgs.size(); i++) {
-			if (commandArgs[i] == "\r\n")
-				continue ;
-			std::cout << Utils::toString(SERVER_INFO) << "Potential arg " << commandArgs[i] << std::endl;
-			if (user->isRegistered())
-				continue; // should exec other commands
-			user->tryRegister(this);
+		std::cout << Utils::toString(SERVER_INFO) << "Handling command from " << fd << "..." << std::endl;
+		std::cout << "ARGS {";
+		for (size_t i = 0; i < commandArgs.size(); i++) {
+			std::cout << commandArgs[i] << (i < commandArgs.size() - 1 ? ", " : "");
 		}
+		std::cout << "}\n";
+		this->_executor->processCommand(user, commandArgs);
+		if (!user->isRegistered())
+			user->tryRegister(this);
 	}
 	if (user->getReadBuffer().find("\r\n"))
 		user->getReadBuffer().clear();
