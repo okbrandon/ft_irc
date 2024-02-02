@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:32 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/01/29 20:08:49 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:46:05 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ int	Utils::stoi(std::string &s) {
 }
 
 std::vector<std::string>	Utils::getSplittedMessage(std::string &message) {
-	std::vector<std::string>	commands;
-	std::string	delimiter = "\n";
-	std::string::size_type to;
+	std::vector<std::string>	commandArgs;
+	std::string					delimiters = " \n";
+	size_t						pos = 0;
 
-	for (to = message.find(delimiter); to != std::string::npos; to = message.find(delimiter)) {
-		commands.push_back(message.substr(0, to));
-		message.erase(0, to + delimiter.size());
+	while ((pos = message.find_first_of(delimiters)) != std::string::npos) {
+		commandArgs.push_back(message.substr(0, pos));
+		message.erase(0, pos + 1);
 	}
-	return (commands);
+	if (!message.empty())
+		commandArgs.push_back(message);
+	return (commandArgs);
 }

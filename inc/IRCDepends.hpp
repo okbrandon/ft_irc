@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 18:31:31 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:42:36 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <iomanip>
 # include <ctime>
 # include <cstring>
+# include <algorithm>
 # include <map>
 # include <vector>
 # include <list>

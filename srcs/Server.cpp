@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/01 18:05:10 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:46:33 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,16 +143,16 @@ void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
-	std::vector<std::string>	commands;
+	std::vector<std::string>	commandArgs;
 	User						*user = findUserByFd(fd);
 
 	if (message.find("\r\n") != std::string::npos) {
-		commands = Utils::getSplittedMessage(message);
+		commandArgs = Utils::getSplittedMessage(message);
 
-		for (size_t i = 0; i != commands.size(); i++) {
-			if (commands[i] == "\r\n")
+		for (size_t i = 0; i != commandArgs.size(); i++) {
+			if (commandArgs[i] == "\r\n")
 				continue ;
-			std::cout << Utils::toString(SERVER_INFO) << "Potential command " << commands[i] << std::endl;
+			std::cout << Utils::toString(SERVER_INFO) << "Potential arg " << commandArgs[i] << std::endl;
 			if (user->isRegistered())
 				continue; // should exec other commands
 			user->tryRegister(this);
