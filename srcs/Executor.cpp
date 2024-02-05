@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 14:43:42 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:03:36 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ void	Executor::processCommand(User *user, std::deque<std::string> commandArgs) {
 				command->execute();
 			} catch (std::string message) {
 				user->addSendBuffer(message);
-				user->sendBufferMessage();
 			} catch (char const* message) {
 				user->addSendBuffer(message);
-				user->sendBufferMessage();
 			}
 			break ;
 		}

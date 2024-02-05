@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 14:53:35 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:02:51 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	User::sendBufferMessage(void) {
 	std::istringstream	buffer(this->_sendBuffer);
 	std::string			reply;
 
+	if (this->_sendBuffer.size() == 0)
+		return ;
 	if (send(this->_socket, this->_sendBuffer.c_str(), this->_sendBuffer.size(), 0) < 0)
 		throw std::runtime_error("Cannot send bytes to user");
 	while (std::getline(buffer, reply)) {
-		std::cout << "[User] Sending to " << this->_socket << "... " << reply << std::endl;
+		std::cout << Utils::toString(SERVER_INFO) << "Sending to " << this->_socket << "... " << reply << std::endl;
 	}
 	this->_sendBuffer.clear();
 }

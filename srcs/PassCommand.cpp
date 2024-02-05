@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:49:41 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 14:53:47 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:03:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ void	PassCommand::execute(void) const {
 	this->_user->setSentPassword(true);
 	this->_user->addSendBuffer(": Password is correct, you may now identify yourself with ");
 	this->_user->addSendBuffer(BCYN "USER" CRESET " and " BCYN "NICK" CRESET " commands.\r\n");
-	this->_user->sendBufferMessage();
 }

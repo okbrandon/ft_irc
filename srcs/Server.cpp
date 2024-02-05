@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 14:43:16 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:06:46 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void	Server::run(void) {
 				}
 			}
 			else if (it->revents & POLLOUT) {
-				if (!this->_handlePollOut(it))
+				if (!this->_handlePollOut(it)) // sending buffer to each client without blocking
 					break ;
 			}
 			++it;
@@ -212,7 +212,7 @@ void	Server::broadcast(std::string message) {
 		User	user = it->second;
 
 		user.addSendBuffer(message);
-		user.sendBufferMessage();
+		user.sendBufferMessage(); // force send message
 	}
 }
 
