@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:19:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 09:43:12 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:53:49 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	NickCommand::execute(void) const {
 
 	if (this->_args.size() < 2)
 		throw ERR_NONICKNAMEGIVEN;
+
 	nickname = this->_args[1];
 	if (!this->_isValidNickname(nickname))
 		throw ERR_ERRONEUSNICKNAME(nickname);

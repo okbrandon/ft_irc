@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 10:46:18 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:00:40 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define STR(str) #str
 #define STRING(str) STR(str)
 
-# define USER_IDENTIFIER(nickname, username) (":" + nickname + "!" + username "@localhost")
+# define USER_IDENTIFIER(nickname, username) (":" + nickname + "!" + username + "@localhost")
 
 # define RPL_WELCOME(nickname, user_id) (":localhost 001 " + nickname + " :Welcome to the Internet Relay Network " + user_id + "\r\n")
 # define RPL_YOURHOST(user, servername, version) (":localhost 002 " + user + " :Your host is " + servername + " (localhost), running version " + version + "\r\n")
