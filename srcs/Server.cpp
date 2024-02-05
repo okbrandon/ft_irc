@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 09:06:46 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:17:42 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,16 @@ User	*Server::findUserByFd(int fd) {
 	if (it == this->_users.end())
 		return (NULL);
 	return (&it->second);
+}
+
+bool	Server::isNicknameAvailable(std::string nickname) {
+	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+		User	user = it->second;
+
+		if (!user.getNickname().compare(nickname))
+			return (false);
+	}
+	return (true);
 }
 
 /* Getters & Setters */

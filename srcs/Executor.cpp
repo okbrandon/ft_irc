@@ -6,12 +6,13 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 09:03:36 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:43:50 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Executor.hpp"
 #include "../inc/PassCommand.hpp"
+#include "../inc/NickCommand.hpp"
 
 Executor::Executor(void) {}
 
@@ -34,6 +35,7 @@ Executor::~Executor(void) {
 
 void	Executor::_registerCommands(void) {
 	this->_commands.push_back(new PassCommand());
+	this->_commands.push_back(new NickCommand());
 }
 
 bool	Executor::_isRegisteredCommand(std::string input) {
