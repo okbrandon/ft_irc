@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 09:14:00 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:46:18 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define RPL_CREATED(user, date) (":localhost 003 " + user + " :This server was created " + date + "\r\n")
 
 # define ERR_NEEDMOREPARAMS(command) ("461 * " + command + ": Not enough parameters" + "\r\n")
-# define ERR_ALREADYREGISTRED "462 * : You're already registered\r\n"
+# define ERR_ALREADYREGISTRED "462 * : You may not reregister\r\n"
 # define ERR_PASSWDMISMATCH "464 * : Password incorrect\r\n"
 # define ERR_NONICKNAMEGIVEN "431 * : No nickname given\r\n"
 # define ERR_ERRONEUSNICKNAME(nickname) ("432 * : " + nickname + " : Erroneus nickname" + "\r\n")

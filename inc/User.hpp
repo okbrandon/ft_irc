@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:57:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/02 14:53:25 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:47:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class User {
 		std::string	_host;
 		std::string	_nickname;
 		std::string	_username;
+		std::string	_realname;
 		std::string	_readBuffer;
 		std::string	_sendBuffer;
 		int			_port;
@@ -52,6 +53,7 @@ class User {
 		std::string	getHost(void) const;
 		std::string	getNickname(void) const;
 		std::string	getUsername(void) const;
+		std::string	getRealname(void) const;
 		std::string	getReadBuffer(void) const;
 		std::string	getSendBuffer(void) const;
 		int			getPort(void) const;
@@ -60,6 +62,7 @@ class User {
 		bool		hasSentPassword(void) const;
 		void		setNickname(std::string const &nickname);
 		void		setUsername(std::string const &username);
+		void		setRealname(std::string const &realname);
 		void		setSentPassword(bool didSend);
 		void		setReadBuffer(std::string const &buffer);
 		void		setSendBuffer(std::string const &buffer);

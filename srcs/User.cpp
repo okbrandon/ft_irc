@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/05 09:02:51 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/05 10:49:15 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ User::User(std::string &host, int port, int socket) {
 	this->_host = host;
 	this->_nickname = "";
 	this->_username = "";
+	this->_realname = "";
 	this->_readBuffer = "";
 	this->_port = port;
 	this->_socket = socket;
@@ -30,6 +31,7 @@ User::User(User const &origin) {
 	this->_host = origin.getHost();
 	this->_nickname = origin.getNickname();
 	this->_username = origin.getUsername();
+	this->_realname = origin.getRealname();
 	this->_readBuffer = origin.getReadBuffer();
 	this->_port = origin.getPort();
 	this->_socket = origin.getSocket();
@@ -43,7 +45,7 @@ User::~User(void) {}
 void	User::tryRegister(Server *server) {
 	if (this->_registered)
 		return ;
-	if (!this->_sentPassword || this->_nickname.empty() || this->_username.empty())
+	if (!this->_sentPassword || this->_nickname.empty() || this->_username.empty() || this->_realname.empty())
 		return ;
 	this->_registered = true;
 	this->addSendBuffer(STRING(RPL_WELCOME(this->_nickname, USER_IDENTIFIER(this->_nickname, this->_username))));
@@ -85,6 +87,10 @@ std::string	User::getUsername(void) const {
 	return (this->_username);
 }
 
+std::string	User::getRealname(void) const {
+	return (this->_realname);
+}
+
 std::string	User::getReadBuffer(void) const {
 	return (this->_readBuffer);
 }
@@ -117,6 +123,10 @@ void	User::setUsername(std::string const &username) {
 	this->_username = username;
 }
 
+void	User::setRealname(std::string const &realname) {
+	this->_realname = realname;
+}
+
 void	User::setSentPassword(bool didSend) {
 	this->_sentPassword = didSend;
 }
@@ -138,6 +148,7 @@ User	&User::operator=(User const &origin) {
 	this->_host = origin.getHost();
 	this->_nickname = origin.getNickname();
 	this->_username = origin.getUsername();
+	this->_realname = origin.getRealname();
 	this->_readBuffer = origin.getReadBuffer();
 	this->_port = origin.getPort();
 	this->_socket = origin.getSocket();

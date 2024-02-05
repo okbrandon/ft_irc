@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/02/05 09:43:58 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/02/05 10:51:18 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS			= Utils.cpp \
 				  ACommand.cpp \
 				  PassCommand.cpp \
 				  NickCommand.cpp \
+				  UserCommand.cpp \
 				  Executor.cpp \
 				  main.cpp \
 
