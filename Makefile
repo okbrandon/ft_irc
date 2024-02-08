@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/02/05 10:51:18 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/02/08 15:00:33 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_DIR			= ./srcs/
 SRCS			= Utils.cpp \
 				  User.cpp \
 				  Server.cpp \
+				  Channel.cpp \
 				  ACommand.cpp \
 				  PassCommand.cpp \
 				  NickCommand.cpp \
