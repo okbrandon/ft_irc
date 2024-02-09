@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:07:05 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:50:44 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ bool	Server::_createUserConnection(void) {
 }
 
 bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
-	User		*user = findUserByFd(it->fd);
-	std::string	delimiter = "\r\n";
-	std::string	message;
-	char		buffer[4096];
-	int			read;
+	static std::string	cachedBuffer;
+	User				*user = findUserByFd(it->fd);
+	std::string			message;
+	char				buffer[4096];
+	int					read;
 
 	memset(buffer, 0, sizeof(buffer));
 	read = recv(it->fd, buffer, 4096, 0);
@@ -106,11 +106,16 @@ bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 		return (false);
 	}
 	message = Utils::toString(buffer);
-	message.replace(message.find("\n"), delimiter.size(), delimiter);
-	std::cout << Utils::toString(SERVER_INFO) << "From " << it->fd << ": " << message;
+	if (cachedBuffer.size() > 0)
+		message = cachedBuffer.append(message);
+	if (message.find('\n') == message.npos) {
+		cachedBuffer = message;
+		return (true);
+	}
 	// Should handle commands from here
 	user->setReadBuffer(message);
 	this->_parseReceived(it->fd, user->getReadBuffer()); // command handler inside this function
+	cachedBuffer.clear();
 	return (true);
 }
 
@@ -144,14 +149,14 @@ void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
+	std::deque<std::string>	commands;
 	std::deque<std::string>	commandArgs;
 	User					*user = findUserByFd(fd);
-	size_t					pos = message.find("\r\n");
 
-	if (pos > 0 && message.find("\r\n") != std::string::npos) {
-		commandArgs = Utils::getSplittedMessage(message);
-
-		std::cout << Utils::toString(SERVER_INFO) << "Handling command from " << fd << "..." << std::endl;
+	commands = Utils::splitCommands(message);
+	std::cout << Utils::toString(SERVER_INFO) << "Handling " << commands.size() << " command(s) from " << fd << "..." << std::endl;
+	for (size_t i = 0; i < commands.size(); i++) {
+		commandArgs = Utils::splitArguments(commands[i]);
 		std::cout << "ARGS {";
 		for (size_t i = 0; i < commandArgs.size(); i++) {
 			std::cout << commandArgs[i] << (i < commandArgs.size() - 1 ? ", " : "");
@@ -160,9 +165,10 @@ void	Server::_parseReceived(int fd, std::string message) {
 		this->_executor->processCommand(user, commandArgs);
 		if (!user->isRegistered())
 			user->tryRegister(this);
+		commandArgs.clear();
 	}
-	if (user->getReadBuffer().find("\r\n"))
-		user->getReadBuffer().clear();
+	commands.clear();
+	user->getReadBuffer().clear();
 }
 
 /* Functions */
