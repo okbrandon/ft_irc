@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 10:21:47 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:25:47 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@
 # define SERVER_OK          BGRN "[Server] " CRESET
 # define SERVER_INFO        BYEL "[Server] " CRESET
 # define SERVER_KO          BRED "[Server] " CRESET
+# define USER_OK            BGRN "[User] " CRESET
+# define USER_INFO          BYEL "[User] " CRESET
+# define USER_KO            BRED "[User] " CRESET
 
-# define ENTER_PASS_FIRST   BRED "You have to enter the password first using the PASS command." CRESET
+# define ENTER_PASS_FIRST   BRED "Please enter the password first." CRESET
 
 #endif

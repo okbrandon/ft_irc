@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:06:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:22:34 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../inc/PassCommand.hpp"
 #include "../inc/NickCommand.hpp"
 #include "../inc/UserCommand.hpp"
+#include "../inc/PingCommand.hpp"
 
 Executor::Executor(void) {}
 
@@ -38,6 +39,7 @@ void	Executor::_registerCommands(void) {
 	this->_commands.push_back(new PassCommand());
 	this->_commands.push_back(new NickCommand());
 	this->_commands.push_back(new UserCommand());
+	this->_commands.push_back(new PingCommand());
 }
 
 bool	Executor::_isRegisteredCommand(std::string input) {
