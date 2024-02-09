@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:05:49 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:18:48 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
  *  - https://www.alien.net.au/irc/irc2numerics.html
  *  - http://www.iprelax.fr/irc/irc_rfcus6.php
 */
-
-// This is the stringificator
-#define STR(str) #str
-#define STRING(str) STR(str)
 
 # define USER_IDENTIFIER(nickname, username) (":" + nickname + "!" + username + "@localhost")
 
