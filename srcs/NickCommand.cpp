@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:19:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:06:58 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:22:29 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ bool	NickCommand::_isValidNickname(std::string nickname) const {
 void	NickCommand::execute(void) const {
 	std::string	nickname;
 
+	if (!this->_user->hasSentPassword())
+		throw ENTER_PASS_FIRST;
 	if (this->_args.size() < 2)
 		throw ERR_NONICKNAMEGIVEN;
 

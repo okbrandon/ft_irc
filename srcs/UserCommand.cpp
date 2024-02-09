@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:02:05 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:07:08 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:22:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	UserCommand::execute(void) const {
 	std::string	username;
 	std::string	realname;
 
+	if (!this->_user->hasSentPassword())
+		throw ENTER_PASS_FIRST;
 	if (this->_args.size() < 5)
 		throw ERR_NEEDMOREPARAMS(this->_name);
 	if (this->_user->isRegistered())
