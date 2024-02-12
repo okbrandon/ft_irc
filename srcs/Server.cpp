@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 15:50:44 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:38:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,12 @@ void	Server::_parseReceived(int fd, std::string message) {
 	User					*user = findUserByFd(fd);
 
 	commands = Utils::splitCommands(message);
-	std::cout << Utils::toString(SERVER_INFO) << "Handling " << commands.size() << " command(s) from " << fd << "..." << std::endl;
+	std::cout << Utils::toString(SERVER_INFO) << "Handling " BCYN << commands.size() << CRESET " command(s) from " << fd << "..." << std::endl;
 	for (size_t i = 0; i < commands.size(); i++) {
 		commandArgs = Utils::splitArguments(commands[i]);
-		std::cout << "ARGS {";
+		std::cout << " - ARGS {";
 		for (size_t i = 0; i < commandArgs.size(); i++) {
-			std::cout << commandArgs[i] << (i < commandArgs.size() - 1 ? ", " : "");
+			std::cout << BCYN << commandArgs[i] << CRESET << (i < commandArgs.size() - 1 ? ", " : "");
 		}
 		std::cout << "}\n";
 		this->_executor->processCommand(user, commandArgs);
