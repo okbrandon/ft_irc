@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:19:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 10:22:29 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:22:56 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ bool	NickCommand::_isValidNickname(std::string nickname) const {
 
 void	NickCommand::execute(void) const {
 	std::string	nickname;
+	static int	i;
 
 	if (!this->_user->hasSentPassword())
 		throw ENTER_PASS_FIRST;
@@ -41,9 +42,17 @@ void	NickCommand::execute(void) const {
 	nickname = this->_args[1];
 	if (!this->_isValidNickname(nickname))
 		throw ERR_ERRONEUSNICKNAME(nickname);
-	if (!this->_server->isNicknameAvailable(nickname))
-		throw ERR_NICKNAMEINUSE(nickname);
-	
+	if (!this->_server->isNicknameAvailable(nickname)) {
+		if (this->_user->isRegistered())
+			throw ERR_NICKNAMEINUSE(nickname);
+
+		nickname.append(Utils::toString(++i));
+		std::cout << Utils::toString(SERVER_INFO) \
+			<< "User asked for nickname '" BRED << this->_args[1] \
+			<< CRESET "' but got '" BRED << nickname \
+			<< CRESET "'..." << std::endl;
+	}
+
 	this->_user->setNickname(nickname);
 	this->_user->addSendBuffer(": You are now nicked as ");
 	this->_user->addSendBuffer(BCYN + nickname + CRESET "\r\n");
