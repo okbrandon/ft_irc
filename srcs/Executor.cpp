@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/12 17:04:43 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:46:15 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../inc/UserCommand.hpp"
 #include "../inc/PingCommand.hpp"
 #include "../inc/CapCommand.hpp"
+#include "../inc/JoinCommand.hpp"
 
 Executor::Executor(void) {}
 
@@ -42,6 +43,7 @@ void	Executor::_registerCommands(void) {
 	this->_commands.push_back(new UserCommand());
 	this->_commands.push_back(new PingCommand());
 	this->_commands.push_back(new CapCommand());
+	this->_commands.push_back(new JoinCommand());
 }
 
 bool	Executor::_isRegisteredCommand(std::string input) {

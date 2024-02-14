@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:38:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 10:19:10 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:35:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CHANNEL_HPP
 
 # include "IRCDepends.hpp"
+
+class User;
 
 /*
  * Structure of an IRC channel
@@ -39,6 +41,7 @@ class Channel {
 		std::vector<User*>			_operators;
 		std::vector<std::string>	_conversation;
 		unsigned int				_limit;
+		User						*_owner;
 
 		/* Private constructors & destructors */
 		Channel(void);
@@ -67,14 +70,17 @@ class Channel {
 		std::vector<User*>			getOperators(void) const;
 		std::vector<std::string>	getConversation(void) const;
 		unsigned int				getLimit(void) const;
+		User						*getOwner(void) const;
 		bool						isOperator(User *user);
 		bool						isInChannel(User *user);
 		bool						isKeyProtected(void) const;
+		bool						hasMode(char mode) const;
 
 		/* Setters */
 		void	setKey(std::string key);
 		void	setTopic(std::string topic);
 		void	setLimit(unsigned int limit);
+		void	setOwner(User *owner);
 
 		/* Overloaded operators */
 		Channel	&operator=(Channel const &origin);

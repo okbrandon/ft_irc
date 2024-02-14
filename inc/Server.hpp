@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:05:58 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:06:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,25 @@
 extern bool	g_server_running;
 
 /*
- * Soft-depending User class.
+ * Soft-depending
  */
 class User;
-
-/*
- * Soft-depending Executor class.
- */
+class Channel;
 class Executor;
 
 class Server {
 
 	private:
 		/* Attributes */
-		std::vector<pollfd>		_polls;
-		std::map<int, User>		_users;
-		std::string				_creationDate;
-		std::string				_hostname;
-		std::string				_password;
-		int						_port;
-		int						_listenerSocket;
-		Executor				*_executor;
+		std::vector<pollfd>				_polls;
+		std::map<int, User>				_users;
+		std::map<std::string, Channel*>	_channels;
+		std::string						_creationDate;
+		std::string						_hostname;
+		std::string						_password;
+		int								_port;
+		int								_listenerSocket;
+		Executor						*_executor;
 
 		/* Private constructor */
 		Server(void);
@@ -63,7 +61,10 @@ class Server {
 		/* Functions */
 		void	run(void);
 		void	broadcast(std::string message);
+		void	addChannel(Channel *channel);
+		void	removeChannel(std::string channelName);
 		User	*findUserByFd(int fd);
+		Channel	*findChannelByName(std::string name);
 		bool	isNicknameAvailable(std::string nickname);
 
 		/* Getters & Setters */

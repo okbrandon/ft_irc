@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.hpp                                          :+:      :+:    :+:   */
+/*   JoinCommand.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 14:17:56 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/13 17:35:51 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/02/13 17:14:05 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/02/14 10:33:17 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef JOINCOMMAND_HPP
+# define JOINCOMMAND_HPP
 
 # include "IRCDepends.hpp"
 
-class Utils {
+class JoinCommand : public ACommand {
 
-	private:	
+	private:
+		std::string	_getStringifiedUsers(Channel *channel) const;
+		std::string	_getChannelMode(Channel *channel) const;
 
 	public:
-		static int								stoi(std::string &s);
-		static std::deque<std::string>			split(std::string message, std::string delimiters);
-		template <class T> static std::string	toString(const T &value) {
-			std::ostringstream oss;
+		JoinCommand(void);
+		~JoinCommand(void);
 
-			oss << value;
-			return (oss.str());
-		}
+		void	execute(void) const;
 
 };
 

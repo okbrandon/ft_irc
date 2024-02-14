@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/12 16:38:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:07:07 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ Server::~Server(void) {
 		this->_polls.pop_back();
 	while (!this->_users.empty())
 		this->_users.erase(this->_users.begin());
+	while (!this->_channels.empty())
+		this->_channels.erase(this->_channels.begin());
 	this->_polls.clear();
 	this->_users.clear();
+	this->_channels.clear();
 }
 
 /* Private functions */
@@ -153,10 +156,10 @@ void	Server::_parseReceived(int fd, std::string message) {
 	std::deque<std::string>	commandArgs;
 	User					*user = findUserByFd(fd);
 
-	commands = Utils::splitCommands(message);
+	commands = Utils::split(message, "\n\v");
 	std::cout << Utils::toString(SERVER_INFO) << "Handling " BCYN << commands.size() << CRESET " command(s) from " << fd << "..." << std::endl;
 	for (size_t i = 0; i < commands.size(); i++) {
-		commandArgs = Utils::splitArguments(commands[i]);
+		commandArgs = Utils::split(commands[i], " \t\r");
 		std::cout << " - ARGS {";
 		for (size_t i = 0; i < commandArgs.size(); i++) {
 			std::cout << BCYN << commandArgs[i] << CRESET << (i < commandArgs.size() - 1 ? ", " : "");
@@ -222,12 +225,35 @@ void	Server::broadcast(std::string message) {
 	}
 }
 
+void	Server::addChannel(Channel *channel) {
+	if (this->_channels.find(channel->getName()) != this->_channels.end())
+		return ; // this is impossible, i mean... I HOPE SO
+	this->_channels[channel->getName()] = channel;
+	//this->_channels.insert(std::pair<std::string, Channel>(channel.getName(), channel));
+}
+
+void	Server::removeChannel(std::string channelName) {
+	std::map<std::string, Channel*>::iterator	it = this->_channels.find(channelName);
+
+	if (it == this->_channels.end())
+		return ;
+	this->_channels.erase(it);
+}
+
 User	*Server::findUserByFd(int fd) {
 	std::map<int, User>::iterator	it = this->_users.find(fd);
 
 	if (it == this->_users.end())
 		return (NULL);
 	return (&it->second);
+}
+
+Channel	*Server::findChannelByName(std::string name) {
+	std::map<std::string, Channel*>::iterator	it = this->_channels.find(name);
+
+	if (it == this->_channels.end())
+		return (NULL); // may instead return a new channel?
+	return (it->second);
 }
 
 bool	Server::isNicknameAvailable(std::string nickname) {
@@ -265,6 +291,7 @@ int	Server::getListenerSocket(void) const {
 Server	&Server::operator=(const Server &origin) {
 	this->_polls = origin._polls;
 	this->_users = origin._users;
+	this->_channels = origin._channels;
 	this->_creationDate = origin._creationDate;
 	this->_hostname = origin._hostname;
 	this->_password = origin._password;

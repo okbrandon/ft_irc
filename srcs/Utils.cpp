@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:32 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 15:50:07 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:56:00 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	Utils::stoi(std::string &s) {
 	return (i);
 }
 
-std::deque<std::string>	Utils::splitArguments(std::string &message) {
-	std::deque<std::string>		commandArgs;
-	std::string					delimiters = " \t\r";
+std::deque<std::string>	Utils::split(std::string message, std::string delimiters) {
+	std::deque<std::string>		args;
 	std::string					token;
 	size_t						pos = 0;
 
@@ -29,24 +28,10 @@ std::deque<std::string>	Utils::splitArguments(std::string &message) {
 		token = message.substr(0, pos);
 
 		if (!token.empty())
-			commandArgs.push_back(token);
+			args.push_back(token);
 		message.erase(0, pos + 1);
 	}
-	return (commandArgs);
-}
-
-std::deque<std::string>	Utils::splitCommands(std::string &message) {
-	std::deque<std::string>		commands;
-	std::string					delimiters = "\n\v";
-	std::string					token;
-	size_t						pos = 0;
-
-	while ((pos = message.find_first_of(delimiters)) != std::string::npos) {
-		token = message.substr(0, pos);
-
-		if (!token.empty())
-			commands.push_back(token);
-		message.erase(0, pos + 1);
-	}
-	return (commands);
+	if (!message.empty())
+		args.push_back(message);
+	return (args);
 }

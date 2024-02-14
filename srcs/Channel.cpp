@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:52:44 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 10:19:16 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:40:42 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,14 @@ std::vector<std::string>	Channel::getConversation(void) const {
 	return (this->_conversation);
 }
 
+unsigned int	Channel::getLimit() const {
+	return (this->_limit);
+}
+
+User	*Channel::getOwner(void) const {
+	return (this->_owner);
+}
+
 bool	Channel::isOperator(User *user) {
 	if (std::find(this->_operators.begin(), this->_operators.end(), user) != this->_operators.end())
 		return (true);
@@ -145,6 +153,10 @@ bool	Channel::isKeyProtected(void) const {
 	return (!this->_key.empty());
 }
 
+bool	Channel::hasMode(char mode) const {
+	return (std::find(this->_modes.begin(), this->_modes.end(), mode) != this->_modes.end());
+}
+
 /* Setters */
 void	Channel::setKey(std::string key) {
 	this->_key = key;
@@ -158,6 +170,10 @@ void	Channel::setLimit(unsigned int limit) {
 	this->_limit = limit;
 }
 
+void	Channel::setOwner(User *owner) {
+	this->_owner = owner;
+}
+
 /* Overloaded operators */
 Channel	&Channel::operator=(Channel const &origin) {
 	this->_name = origin._name;
@@ -167,5 +183,6 @@ Channel	&Channel::operator=(Channel const &origin) {
 	this->_operators = origin._operators;
 	this->_conversation = origin._conversation;
 	this->_limit = origin._limit;
+	this->_owner = origin._owner;
 	return (*this);
 }
