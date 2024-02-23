@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/14 10:26:22 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:47:00 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@
 # define RPL_NAMREPLY(user, channelMode, channel, userList) ("353 " + user + " " + channelMode + " " + channel + " :" + userList + "\r\n")
 # define RPL_ENDOFNAMES(user, channel) ("366 " + user + " " + channel + " :End of /NAMES list" + "\r\n")
 
-# define ERR_NEEDMOREPARAMS(command) ("461 * " + command + ":Not enough parameters" + "\r\n")
+# define ERR_NOSUCHNICK(nickname) ("401 * " + nickname + " :No such nick/channel" + "\r\n")
+# define ERR_NORECIPIENT(command) ("411 * " + command + " :No recipient given" + "\r\n")
+# define ERR_NOTONCHANNEL(channel) ("442 * " + channel + " :You're not on that channel" + "\r\n")
+# define ERR_NEEDMOREPARAMS(command) ("461 * " + command + " :Not enough parameters" + "\r\n")
 # define ERR_ALREADYREGISTRED "462 * :You may not reregister\r\n"
 # define ERR_PASSWDMISMATCH "464 * :Password incorrect\r\n"
 # define ERR_NONICKNAMEGIVEN "431 * :No nickname given\r\n"

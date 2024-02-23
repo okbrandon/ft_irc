@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/14 11:07:07 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:13:00 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,16 @@ User	*Server::findUserByFd(int fd) {
 	if (it == this->_users.end())
 		return (NULL);
 	return (&it->second);
+}
+
+User	*Server::findUserByName(std::string name) {
+	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+		User	*user = &it->second;
+
+		if (!user->getNickname().compare(name))
+			return (user);
+	}
+	return (NULL);
 }
 
 Channel	*Server::findChannelByName(std::string name) {

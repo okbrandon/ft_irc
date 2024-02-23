@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:38:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/14 10:35:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:12:51 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class Channel {
 		void	addOperator(User *user);
 		void	removeOperator(User *user);
 		void	broadcast(std::string message);
+		void	excludeBroadcast(std::string message, User *excluded);
 
 		/* Getters */
 		std::string					getName(void) const;

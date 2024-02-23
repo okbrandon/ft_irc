@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/14 11:06:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:12:45 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ class Server {
 		void	addChannel(Channel *channel);
 		void	removeChannel(std::string channelName);
 		User	*findUserByFd(int fd);
+		User	*findUserByName(std::string name);
 		Channel	*findChannelByName(std::string name);
 		bool	isNicknameAvailable(std::string nickname);
 
