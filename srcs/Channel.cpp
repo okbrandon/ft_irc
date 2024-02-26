@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:52:44 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/23 12:18:18 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/26 09:35:37 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,8 @@ void	Channel::excludeBroadcast(std::string message, User *excluded) {
 	for (std::vector<User*>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
 		User	*user = *it;
 
-		if (!user->getNickname().compare(excluded->getNickname())) {
-			std::cout << "[Channel] Skipping " << user->getNickname() << std::endl;
+		if (!user->getNickname().compare(excluded->getNickname()))
 			continue ;
-		}
 		// adding message to user send buffer
 		user->addSendBuffer(message);
 	}
