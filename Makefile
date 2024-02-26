@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/02/23 10:52:24 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/02/26 09:58:38 by evmorvan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ SRCS			= Utils.cpp \
 				  NickCommand.cpp \
 				  UserCommand.cpp \
 				  PingCommand.cpp \
+				  KickCommand.cpp \
+				  InviteCommand.cpp \
+				  TopicCommand.cpp \
+				  ModeCommand.cpp \
 				  CapCommand.cpp \
 				  JoinCommand.cpp \
 				  PrivmsgCommand.cpp \

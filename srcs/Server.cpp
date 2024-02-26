@@ -248,7 +248,7 @@ User	*Server::findUserByFd(int fd) {
 	return (&it->second);
 }
 
-User	*Server::findUserByName(std::string name) {
+User	*Server::findUserByName(std::string name) { // for some reason, findUserByName never returns NULL even if the user is not found
 	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
 		User	*user = &it->second;
 

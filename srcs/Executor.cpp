@@ -18,6 +18,10 @@
 #include "../inc/CapCommand.hpp"
 #include "../inc/JoinCommand.hpp"
 #include "../inc/PrivmsgCommand.hpp"
+#include "../inc/KickCommand.hpp"
+#include "../inc/InviteCommand.hpp"
+#include "../inc/TopicCommand.hpp"
+#include "../inc/ModeCommand.hpp"
 
 Executor::Executor(void) {}
 
@@ -46,6 +50,10 @@ void	Executor::_registerCommands(void) {
 	this->_commands.push_back(new CapCommand());
 	this->_commands.push_back(new JoinCommand());
 	this->_commands.push_back(new PrivmsgCommand());
+	this->_commands.push_back(new KickCommand());
+	this->_commands.push_back(new InviteCommand());
+	this->_commands.push_back(new TopicCommand());
+	this->_commands.push_back(new ModeCommand());
 }
 
 bool	Executor::_isRegisteredCommand(std::string input) {
