@@ -6,13 +6,15 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:14:33 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/23 12:26:58 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:17:57 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/PrivmsgCommand.hpp"
 
-PrivmsgCommand::PrivmsgCommand(void) : ACommand("PRIVMSG") {}
+PrivmsgCommand::PrivmsgCommand(void) : ACommand("PRIVMSG") {
+	this->addAliase("NOTICE");
+}
 
 PrivmsgCommand::~PrivmsgCommand(void) {}
 
@@ -29,7 +31,7 @@ bool	PrivmsgCommand::_sendChannelMessage(std::string channelName, std::string me
 	}
 
 	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
-	std::string response = userId + " PRIVMSG " + channelName + " " + message + "\r\n";
+	std::string response = userId + " " + this->getCalledCommand() + " " + channelName + " " + message + "\r\n";
 
 	channel->excludeBroadcast(response, this->_user);
 	return (true);
@@ -44,7 +46,7 @@ bool	PrivmsgCommand::_sendUserMessage(std::string nickName, std::string message)
 	}
 
 	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
-	std::string response = userId + " PRIVMSG " + target->getNickname() + " " + message + "\r\n";
+	std::string response = userId + " " + this->getCalledCommand() + " " + target->getNickname() + " " + message + "\r\n";
 
 	target->addSendBuffer(response);
 	return (true);
