@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:30 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/27 11:18:51 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:28:53 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	TopicCommand::execute(void) const {
 		if (channel->getTopic().empty())
 			this->_user->addSendBuffer(RPL_NOTOPIC(this->_user->getNickname(), channel->getName()));
 		else
-            this->_user->addSendBuffer(RPL_TOPIC(this->_user->getNickname(), channel->getName(), channel->getTopic()));
+			this->_user->addSendBuffer(RPL_TOPIC(this->_user->getNickname(), channel->getName(), channel->getTopic()));
 		return ;
 	}
 
@@ -39,16 +39,16 @@ void	TopicCommand::execute(void) const {
 	if (channel->hasMode('t') && !channel->isOperator(this->_user))
 		throw ERR_CHANOPRIVSNEEDED(channel->getName());
 
-    std::string topic;
-    for (size_t i = 1; i < this->_args.size(); i++) {
-        topic += this->_args[i];
-        if (i + 1 < this->_args.size())
-            topic += " ";
-    }
+	std::string	topic;
+	for (size_t i = 2; i < this->_args.size(); i++) {
+		if (!topic.empty())
+			topic.append(" ");
+		topic.append(this->_args[i]);
+	}
 	
 	std::string userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
-	std::string response = userId + " TOPIC " + channel->getName() + " :" + topic + "\r\n";
+	std::string response = userId + " TOPIC " + channel->getName() + " " + topic + "\r\n";
 
-	channel->setTopic(topic);
-    channel->broadcast(response);
+	channel->setTopic(topic.at(0) == ':' ? topic.erase(0, 1) : topic);
+	channel->broadcast(response);
 }
