@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:13 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:05:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:14:52 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ class ACommand {
 
 	protected:
 		std::string					_name;
+		std::deque<std::string>		_aliases;
 		std::deque<std::string>		_args;
+		std::string					_calledCommand;
 		User						*_user;
 		Server						*_server;
 		
@@ -30,11 +32,17 @@ class ACommand {
 		ACommand(ACommand const &origin);
 		virtual ~ACommand(void);
 
-		std::string	getName(void) const;
+		std::string				getName(void) const;
+		std::string				getCalledCommand(void) const;
+		std::deque<std::string>	getAliases(void) const;
 
 		void	setArgs(std::deque<std::string> args);
 		void	setUser(User *user);
 		void	setServer(Server *server);
+		void	setCalledCommand(std::string calledCommand);
+		void	addAliase(std::string aliase);
+
+		bool	hasAliase(std::string aliase) const;
 
 		virtual void	execute(void) const = 0;
 
