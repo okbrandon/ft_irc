@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TopicCommand.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:30 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/26 09:57:30 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:18:51 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	TopicCommand::execute(void) const {
         if (i + 1 < this->_args.size())
             topic += " ";
     }
+	
+	std::string userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+	std::string response = userId + " TOPIC " + channel->getName() + " :" + topic + "\r\n";
 
 	channel->setTopic(topic);
-    channel->broadcast(":" + this->_user->getNickname() + "!" + this->_user->getUsername() + "@localhost" + " TOPIC " + channel->getName() + " :" + topic + "\r\n");
+    channel->broadcast(response);
 }

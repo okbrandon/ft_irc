@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   InviteCommand.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:13 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/26 09:57:13 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:17:45 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	InviteCommand::execute(void) const {
 		throw ERR_CHANOPRIVSNEEDED(this->_args[2]);
 
 	if (!channel->isInChannel(target)) {
-		target->addSendBuffer(":" + this->_user->getNickname() + "!" + this->_user->getUsername() + "@localhost" + " INVITE " + target->getNickname() + " " + channel->getName() + "\r\n");
+		std::string userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+		std::string	response = userId + " INVITE " + target->getNickname() + " " + channel->getName() + "\r\n";
+
+		target->addSendBuffer(response);
 		this->_user->addSendBuffer(RPL_INVITING(channel->getName(), target->getNickname()));
 		channel->addUser(target);
 	}

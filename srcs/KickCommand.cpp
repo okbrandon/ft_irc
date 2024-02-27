@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   KickCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:24 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/26 09:57:24 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:17:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ KickCommand::~KickCommand(void) {}
 void	KickCommand::execute(void) const {
 	if (this->_args.size() < 4)
 		throw ERR_NEEDMOREPARAMS(this->_name);
-	
-	std::cout << "1" << std::endl;
 
 	Channel	*channel = this->_server->findChannelByName(this->_args[1]);
 	User	*user = this->_server->findUserByFd(this->_user->getSocket());
@@ -37,10 +35,12 @@ void	KickCommand::execute(void) const {
 
 	if (!targetUser)
 		throw ERR_NOSUCHNICK(target);
-	if (!channel->isInChannel(targetUser)) // seems broken need investigate
+	if (!channel->isInChannel(targetUser)) // seems broken need investigate; (not broken, message is being sent into main buffer -brandon)
 		throw ERR_USERNOTINCHANNEL(channel->getName(), target);
 
-	std::string kickMessage = ":" + this->_user->getNickname() + "!" + this->_user->getUsername() + "@localhost" + " KICK " + channel->getName() + " " + targetUser->getNickname() + " :" + this->_args[3] + "\r\n";
-	channel->broadcast(kickMessage);
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+	std::string response = userId + " KICK " + channel->getName() + " " + targetUser->getNickname() + " :" + this->_args[3] + "\r\n";
+
+	channel->broadcast(response);
 	channel->removeUser(targetUser);
 }

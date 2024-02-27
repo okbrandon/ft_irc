@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:02:05 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/09 10:22:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:19:12 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ UserCommand::UserCommand(void) : ACommand("USER") {}
 
 UserCommand::~UserCommand(void) {}
 
-/*
- * {USER, ali, 0, *, :My, name, is}
- *   0     1   2  3   4    5    6
- */
 std::string	UserCommand::_extractRealname(std::deque<std::string> args) const {
 	std::string	realname;
 
@@ -34,9 +30,6 @@ std::string	UserCommand::_extractRealname(std::deque<std::string> args) const {
 	return (realname);
 }
 
-/*
- * <?> The maximum length of the username may be specified by the USERLEN 005 parameter.
- */
 void	UserCommand::execute(void) const {
 	std::string	username;
 	std::string	realname;
