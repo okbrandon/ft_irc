@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:24 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/27 11:17:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:56:47 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ void	KickCommand::execute(void) const {
 		throw ERR_NEEDMOREPARAMS(this->_name);
 
 	Channel	*channel = this->_server->findChannelByName(this->_args[1]);
-	User	*user = this->_server->findUserByFd(this->_user->getSocket());
 
 	if (!channel)
 		throw ERR_NOSUCHCHANNEL(this->_args[1]);
-	if (!user)
-		throw ERR_USERNOTINCHANNEL(this->_args[1], this->_user->getNickname());
-	if (!channel->isOperator(user))
+	if (!channel->isOperator(this->_user))
 		throw ERR_CHANOPRIVSNEEDED(channel->getName());
 
 	std::string	target = this->_args[2];
@@ -35,7 +32,7 @@ void	KickCommand::execute(void) const {
 
 	if (!targetUser)
 		throw ERR_NOSUCHNICK(target);
-	if (!channel->isInChannel(targetUser)) // seems broken need investigate; (not broken, message is being sent into main buffer -brandon)
+	if (!channel->isInChannel(targetUser))
 		throw ERR_USERNOTINCHANNEL(channel->getName(), target);
 
 	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
