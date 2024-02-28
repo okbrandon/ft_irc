@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/27 13:54:20 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:18:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ void	Server::run(void) {
 			}
 			++it;
 		}
+		IRCLogger::getInstance()->printQueue(); // printing debug queue
 	}
 	this->broadcast("Server closed");
 	std::cout << Utils::toString(SERVER_KO) << "Server is shutting down..." << std::endl;

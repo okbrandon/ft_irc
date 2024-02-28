@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/13 17:17:10 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:24:31 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "Server.hpp"
 # include "ACommand.hpp"
 # include "Executor.hpp"
+# include "IRCLogger.hpp"
 
 # define BRED	"\033[1;31m"
 # define BGRN	"\033[1;32m"
@@ -59,5 +60,9 @@
 # define USER_KO            BRED "[User] " CRESET
 
 # define ENTER_PASS_FIRST   BRED "Please enter the password first." CRESET
+
+# ifndef LOGS
+#  define LOGS false
+# endif
 
 #endif

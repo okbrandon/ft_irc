@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/02/26 09:58:38 by evmorvan         ###   ########.fr        #
+#    Updated: 2024/02/27 17:24:06 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS			= Utils.cpp \
 				  JoinCommand.cpp \
 				  PrivmsgCommand.cpp \
 				  Executor.cpp \
+				  IRCLogger.cpp \
 				  main.cpp \
 
 OBJ_DIR			= ./objs/
@@ -70,6 +71,11 @@ ifeq ($(UNAME_S),Linux)
 endif
 endif
 
+# Compile with logs
+ifdef WLOGS
+	CFLAGS += -D LOGS=true
+endif
+
 ${OBJ_DIR}%.o:	${SRC_DIR}%.cpp
 	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Compiling ${GREEN}%s${RESET}...${GREY}" ${notdir $<}
 	@${CC} ${CFLAGS} -I${SRC_DIR} -c $< -o $@
@@ -88,6 +94,9 @@ ${OBJ_DIR}:
 
 debug:
 	@make DEBUG=1 re
+
+logs:
+	@make WLOGS=true re
 
 clean:
 	@${RM} ${OBJ_DIR}

@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:52:31 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:06:56 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:19:02 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	main(int argc, char **argv) {
 		std::cerr << Utils::toString(SERVER_KO) << "Exception caught!" << std::endl;
 		std::cerr << exception.what() << std::endl;
 	}
+	IRCLogger::getInstance()->destroy();
 	return (0);
 }
