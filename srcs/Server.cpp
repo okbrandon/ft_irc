@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/28 11:18:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:20:06 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,8 @@ void	Server::broadcast(std::string message) {
 
 void	Server::addChannel(Channel *channel) {
 	if (this->_channels.find(channel->getName()) != this->_channels.end())
-		return ; // this is impossible, i mean... I HOPE SO
+		return ;
 	this->_channels[channel->getName()] = channel;
-	//this->_channels.insert(std::pair<std::string, Channel>(channel.getName(), channel));
 }
 
 void	Server::removeChannel(std::string channelName) {
