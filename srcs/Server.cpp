@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/28 11:20:06 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:20:44 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ Channel	*Server::findChannelByName(std::string name) {
 	std::map<std::string, Channel*>::iterator	it = this->_channels.find(name);
 
 	if (it == this->_channels.end())
-		return (NULL); // may instead return a new channel?
+		return (NULL);
 	return (it->second);
 }
 
