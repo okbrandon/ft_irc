@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:21:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/28 10:31:09 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:14:57 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void	IRCLogger::queue(std::string message) {
 }
 
 void	IRCLogger::printQueue(void) {
-	for (std::deque<std::string>::iterator it = this->_queuedMessages.begin(); it != this->_queuedMessages.end(); it++) {
-		std::string	message = *it;
-		std::cout << message;
+	if (LOGS) {	
+		for (std::deque<std::string>::iterator it = this->_queuedMessages.begin(); it != this->_queuedMessages.end(); it++) {
+			std::string	message = *it;
+			std::cout << message;
+		}
 	}
 	this->_queuedMessages.clear();
 }
