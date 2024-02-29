@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:16:32 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/14 10:56:00 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:04:44 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@ int	Utils::stoi(std::string &s) {
 
 	std::istringstream(s) >> i;
 	return (i);
+}
+
+std::string	Utils::removeEndOccurrence(std::string str, std::string find) {
+	while (true) {
+		size_t pos = str.size() - find.size();
+
+		if (pos < 0 || str.substr(pos) != find)
+			break;
+		str.erase(pos, find.size());
+	}   
+	return (str);
 }
 
 std::deque<std::string>	Utils::split(std::string message, std::string delimiters) {
