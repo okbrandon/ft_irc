@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:19:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/12 17:22:56 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:40:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ void	NickCommand::execute(void) const {
 			throw ERR_NICKNAMEINUSE(nickname);
 
 		nickname.append(Utils::toString(++i));
-		std::cout << Utils::toString(SERVER_INFO) \
-			<< "User asked for nickname '" BRED << this->_args[1] \
-			<< CRESET "' but got '" BRED << nickname \
-			<< CRESET "'..." << std::endl;
+		/* Start of debug */
+		IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) \
+			+ "User asked for nickname '" BRED + this->_args[1] \
+			+ CRESET "' but got '" BRED + nickname \
+			+ CRESET "'...\n");
+		/* End of debug */
 	}
 
 	this->_user->setNickname(nickname);

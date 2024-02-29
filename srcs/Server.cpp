@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 11:37:25 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:00:38 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,11 @@ void	Server::_printServerInfos(void) {
 	if (LOGS) // not printing informations if running debugger
 		return ;
 	/* ServerTitle */
-	ss << std::left << std::setw(10) << "FD" 
-		<< std::left << std::setw(10) << "Nickname"
-		<< std::left << std::setw(10) << "Host"
-		<< std::left << std::setw(10) << "Port"
-		<< std::left << std::endl;
+	ss << " " BCYN << std::left << std::setw(10) << "FD" 
+		<< CRESET " " BCYN << std::left << std::setw(10) << "Nickname"
+		<< CRESET " " BCYN << std::left << std::setw(10) << "Host"
+		<< CRESET " " BCYN << std::left << std::setw(10) << "Port"
+		<< CRESET " " << std::left << std::endl;
 	serverTitle = ss.str();
 	ss.clear();
 	ss.str(std::string());
@@ -143,11 +143,11 @@ void	Server::_printServerInfos(void) {
 	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
 		User	user = it->second;
 
-		ss << std::left << std::setw(10) << user.getSocket()
-			<< std::left << std::setw(10) << user.getNickname()
-			<< std::left << std::setw(10) << user.getHost()
-			<< std::left << std::setw(10) << user.getPort()
-			<< std::left << std::endl;
+		ss << " " << std::left << std::setw(10) << user.getSocket()
+			<< " " << std::left << std::setw(10) << user.getNickname()
+			<< " " << std::left << std::setw(10) << user.getHost()
+			<< " " << std::left << std::setw(10) << user.getPort()
+			<< " " << std::left << std::endl;
 		clientTitle = ss.str();
 		clientInfos.append(clientTitle);
 		ss.clear();
