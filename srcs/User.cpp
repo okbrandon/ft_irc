@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 10:13:44 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:24:44 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	User::tryRegister(Server *server) {
 	if (!this->_sentPassword || this->_nickname.empty() || this->_username.empty() || this->_realname.empty())
 		return ;
 	this->_registered = true;
-	this->sendDirectMessage("CAP * LS :multi-prefix sasl");
 	this->addSendBuffer(RPL_WELCOME(this->_nickname, USER_IDENTIFIER(this->_nickname, this->_username)));
 	this->addSendBuffer(RPL_YOURHOST(this->_nickname, "42FT_IRC", "1.0"));
 	this->addSendBuffer(RPL_CREATED(this->_nickname, server->getCreationDate()));
