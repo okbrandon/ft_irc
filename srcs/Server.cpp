@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/28 11:20:44 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:12:06 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 	}
 	if (read == 0) {
 		// User disconnected
-		std::cout << Utils::toString(SERVER_INFO) << "Disconnection event fired!" << std::endl;
 		this->_removeUser(it->fd, it);
 		return (false);
 	}
@@ -140,7 +139,9 @@ void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
 	userPoll.events = POLLIN | POLLOUT;
 	this->_polls.push_back(userPoll);
 	this->_users.insert(std::pair<int, User>(userSocket, userObj));
-	std::cout << Utils::toString(SERVER_INFO) << "New client with id " << userSocket << "..." << std::endl;
+	/* Start of debug */
+	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(userSocket) + CRESET " connected.\n");
+	/* End of debug */
 }
 
 void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
@@ -148,23 +149,29 @@ void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 		std::cerr << Utils::toString(SERVER_KO) << BRED "close() error when removing user, continue..." CRESET << std::endl;
 	this->_users.erase(currentFd);
 	this->_polls.erase(it);
-	std::cout << Utils::toString(SERVER_INFO) << "Bye client with id " << currentFd << "." << std::endl;
+	/* Start of debug*/
+	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(currentFd) + CRESET " disconnected.\n");
+	/* End of debug */
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
+	std::string				debugLog;
 	std::deque<std::string>	commands;
 	std::deque<std::string>	commandArgs;
 	User					*user = findUserByFd(fd);
 
 	commands = Utils::split(message, "\n\v");
-	std::cout << Utils::toString(SERVER_INFO) << "Handling " BCYN << commands.size() << CRESET " command(s) from " << fd << "..." << std::endl;
+	/* Start of debug*/
+	debugLog.append(Utils::toString(SERVER_INFO) + "Handling " BCYN + Utils::toString(commands.size()) + CRESET " command(s) from " + Utils::toString(fd) + "...\n");
+	/* End of debug */
 	for (size_t i = 0; i < commands.size(); i++) {
 		commandArgs = Utils::split(commands[i], " \t\r");
-		std::cout << " - ARGS {";
-		for (size_t i = 0; i < commandArgs.size(); i++) {
-			std::cout << BCYN << commandArgs[i] << CRESET << (i < commandArgs.size() - 1 ? ", " : "");
-		}
-		std::cout << "}\n";
+		/* Start of debug */
+		debugLog.append(" - ARGS {");
+		for (size_t i = 0; i < commandArgs.size(); i++)
+			debugLog.append(BCYN + commandArgs[i] + CRESET + (i < commandArgs.size() - 1 ? ", " : ""));
+		debugLog.append("}\n");
+		/* End of debug */
 		this->_executor->processCommand(user, commandArgs);
 		if (!user->isRegistered())
 			user->tryRegister(this);
@@ -172,6 +179,9 @@ void	Server::_parseReceived(int fd, std::string message) {
 	}
 	commands.clear();
 	user->getReadBuffer().clear();
+	/* Start of debug */
+	IRCLogger::getInstance()->queue(debugLog);
+	/* End of debug */
 }
 
 /* Functions */
