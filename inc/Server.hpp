@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/23 12:12:45 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:37:57 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ class Server {
 		void		_addUser(int userSocket, struct sockaddr_in userAddr);
 		void		_removeUser(int currentFd, std::vector<pollfd>::iterator &it);
 		void		_parseReceived(int fd, std::string message);
+		void		_printServerInfos(void);
 
 	public:
 		/* Constructors & Destructors */

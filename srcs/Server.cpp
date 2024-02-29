@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 10:12:06 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:37:25 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,55 @@ bool	Server::_handleUserConnection(std::vector<pollfd>::iterator &it) {
 	return (true);
 }
 
+void	Server::_printServerInfos(void) {
+	std::string			serverInfos;
+	std::string			serverTitle;
+	std::string			clientInfos;
+	std::string			clientTitle;
+	std::stringstream	ss;
+
+	if (LOGS) // not printing informations if running debugger
+		return ;
+	/* ServerTitle */
+	ss << std::left << std::setw(10) << "FD" 
+		<< std::left << std::setw(10) << "Nickname"
+		<< std::left << std::setw(10) << "Host"
+		<< std::left << std::setw(10) << "Port"
+		<< std::left << std::endl;
+	serverTitle = ss.str();
+	ss.clear();
+	ss.str(std::string());
+	/* ClientInfos */
+	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
+		User	user = it->second;
+
+		ss << std::left << std::setw(10) << user.getSocket()
+			<< std::left << std::setw(10) << user.getNickname()
+			<< std::left << std::setw(10) << user.getHost()
+			<< std::left << std::setw(10) << user.getPort()
+			<< std::left << std::endl;
+		clientTitle = ss.str();
+		clientInfos.append(clientTitle);
+		ss.clear();
+		ss.str(std::string());
+	}
+	/* Making server infos message */
+	for (int i = 0; i < 50; i++)
+		serverInfos.append("\n");
+	serverInfos.append("Welcome! Displaying " BCYN "IRCServer" CRESET " informations...\n\n");
+	serverInfos.append(serverTitle);
+	serverInfos.append(clientInfos);
+	/* Printing infos */
+	std::cout << serverInfos << std::endl;
+}
+
 bool	Server::_handlePollOut(std::vector<pollfd>::iterator &it) {
 	User	*user = findUserByFd(it->fd);
 
 	if (!user) // no connection established, skipping
 		return (true);
+	if (!user->getSendBuffer().empty())
+		this->_printServerInfos();
 	user->sendBufferMessage();
 	return (true);
 }
@@ -142,6 +186,7 @@ void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
 	/* Start of debug */
 	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(userSocket) + CRESET " connected.\n");
 	/* End of debug */
+	this->_printServerInfos();
 }
 
 void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
@@ -152,6 +197,7 @@ void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
 	/* Start of debug*/
 	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(currentFd) + CRESET " disconnected.\n");
 	/* End of debug */
+	this->_printServerInfos();
 }
 
 void	Server::_parseReceived(int fd, std::string message) {
