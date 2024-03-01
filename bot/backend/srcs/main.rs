@@ -92,7 +92,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .route("/api/v1/chat", web::post().to(chat))
     })
-    .bind(format!("127.0.0.1:{}", port))?
+    .bind(format!("0.0.0.0:{}", port))?
     .run()
     .await
 }
