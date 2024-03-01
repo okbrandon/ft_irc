@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/27 16:16:24 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:07:27 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ Executor::Executor(Executor const &origin) {
 }
 
 Executor::~Executor(void) {
-	for (std::deque<ACommand*>::iterator it = this->_commands.begin(); it != this->_commands.end(); it++) {
+	for (std::deque<ACommand*>::iterator it = this->_commands.begin(); it != this->_commands.end(); it++)
 		delete *it;
-		this->_commands.erase(it);
-	}
 	this->_commands.clear();
 }
 

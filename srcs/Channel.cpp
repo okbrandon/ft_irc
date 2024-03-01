@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:52:44 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/26 09:35:37 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:02:54 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,6 @@ Channel::Channel(Channel const &origin) {
 }
 
 Channel::~Channel(void) {
-	for (std::vector<User*>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
-		delete *it;
-		this->_users.erase(it);
-	}
-	for (std::vector<User*>::iterator it = this->_operators.begin(); it != this->_operators.end(); it++) {
-		delete *it;
-		this->_operators.erase(it);
-	}
 	this->_users.clear();
 	this->_operators.clear();
 	this->_modes.clear();

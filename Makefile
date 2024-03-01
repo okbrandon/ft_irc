@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/02/27 17:24:06 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/03/01 09:42:45 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJ_DIR			= ./objs/
 OBJS			= ${addprefix ${OBJ_DIR}, ${SRCS:.cpp=.o}}
 
 CC				= c++
-CFLAGS			= -Wall -Wextra -Werror -std=c++98 -pedantic
+CFLAGS			= -Wall -Wextra -Werror -std=c++98 -pedantic -ggdb3
 RM				= rm -rf
 
 # Checking OS type

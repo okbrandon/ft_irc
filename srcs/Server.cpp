@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 12:00:38 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:03:07 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ Server::~Server(void) {
 		this->_polls.pop_back();
 	while (!this->_users.empty())
 		this->_users.erase(this->_users.begin());
-	while (!this->_channels.empty())
-		this->_channels.erase(this->_channels.begin());
+	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++)
+		delete it->second;
 	this->_polls.clear();
 	this->_users.clear();
 	this->_channels.clear();
+	delete this->_executor;
 }
 
 /* Private functions */
@@ -161,6 +162,7 @@ void	Server::_printServerInfos(void) {
 	serverInfos.append(clientInfos);
 	/* Printing infos */
 	std::cout << serverInfos << std::endl;
+	std::cout << "channels size: " << this->_channels.size() << std::endl;
 }
 
 bool	Server::_handlePollOut(std::vector<pollfd>::iterator &it) {
@@ -181,6 +183,7 @@ void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
 
 	userPoll.fd = userSocket;
 	userPoll.events = POLLIN | POLLOUT;
+	userPoll.revents = 0;
 	this->_polls.push_back(userPoll);
 	this->_users.insert(std::pair<int, User>(userSocket, userObj));
 	/* Start of debug */
