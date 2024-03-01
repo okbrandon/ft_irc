@@ -17,7 +17,7 @@ std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::
                "Host: api.evan.sh\r\n"
                "Content-Type: application/json\r\n"
                "Content-Length: " + std::to_string(jsonPayload.length()) + "\r\n"
-               "User-Agent: IRCBot\r\n" +
+               "User-Agent: Booty\r\n" +
                "\r\n" +
                jsonPayload;
 
