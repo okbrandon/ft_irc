@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::env;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Message {
@@ -26,10 +27,17 @@ pub struct OpenAIRequest {
 
 impl Chat {
     pub fn get_or_create(channel_id: &str) -> Chat {
+        let prompt = env::var("PROMPT").unwrap_or_default();
+        let mut messages = Vec::new();
+        if !prompt.is_empty() {
+            messages.push(Message {
+                role: "system".to_string(),
+                content: prompt,
+            });
+        }
         Chat {
             channel_id: channel_id.to_string(),
-            messages: Vec::new(),
+            messages,
         }
     }
 }
-

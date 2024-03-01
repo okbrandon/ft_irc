@@ -19,7 +19,7 @@ async fn chat(data: web::Json<OpenAIRequest>) -> impl Responder {
     let mut chats = CHATS.lock().unwrap();
     let conversation = chats.entry(data.channel_id.clone()).or_insert(Chat::get_or_create(&data.channel_id));
 
-    println!("Processing message from user {} in channel {}", &data.message.author, &data.channel_id);
+    println!("Processing message from user {} in channel #{}", &data.message.author, &data.channel_id);
 
     // Store user message in conversation history
     let user_message = Message {
