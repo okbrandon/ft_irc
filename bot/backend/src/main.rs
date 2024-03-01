@@ -59,8 +59,9 @@ async fn call_openai_api(data: &Vec<Message>) -> String {
     let url = "https://api.openai.com/v1/chat/completions";
 
     // Prepare data for OpenAI API
+    let model = env::var("OPENAI_MODEL").unwrap_or_else(|_| "gpt-3.5-turbo".to_string());
     let openai_request = json!({
-        "model": "gpt-3.5-turbo",
+        "model": model,
         "messages": data,
     });
 
