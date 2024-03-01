@@ -4,7 +4,7 @@
 
 const int MAX_BUFFER_SIZE = 1024;
 
-IrcBot::IrcBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(8080) { }
+IrcBot::IrcBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(443) { }
     
 void IrcBot::connect(const char* server, const char* password, const char* channel) {
     _socketHandler.createSocket();
