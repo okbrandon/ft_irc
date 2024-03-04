@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/04 10:07:04 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:49:17 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,29 +176,65 @@ bool	Server::_handlePollOut(std::vector<pollfd>::iterator &it) {
 	return (true);
 }
 
-void	Server::_addUser(int userSocket, struct sockaddr_in userAddr) {
+void	Server::_addUser(int fd, struct sockaddr_in userAddr) {
 	pollfd		userPoll;
 	std::string	userHost = Utils::toString(inet_ntoa(userAddr.sin_addr));
-	User		userObj(userHost, ntohs(userAddr.sin_port), userSocket);
+	User		userObj(userHost, ntohs(userAddr.sin_port), fd);
 
-	userPoll.fd = userSocket;
+	userPoll.fd = fd;
 	userPoll.events = POLLIN | POLLOUT;
 	userPoll.revents = 0;
 	this->_polls.push_back(userPoll);
-	this->_users.insert(std::pair<int, User>(userSocket, userObj));
+	this->_users.insert(std::pair<int, User>(fd, userObj));
 	/* Start of debug */
-	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(userSocket) + CRESET " connected.\n");
+	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(fd) + CRESET " connected.\n");
 	/* End of debug */
 	this->_printServerInfos();
 }
 
-void	Server::_removeUser(int currentFd, std::vector<pollfd>::iterator &it) {
-	if (close(currentFd) < 0)
+void	Server::_removeUser(int fd, std::vector<pollfd>::iterator &it) {
+	if (close(fd) < 0)
 		std::cerr << Utils::toString(SERVER_KO) << BRED "close() error when removing user, continue..." CRESET << std::endl;
-	this->_users.erase(currentFd);
+	this->_removeUserFromChannels(fd);
+	this->_users.erase(fd);
 	this->_polls.erase(it);
 	/* Start of debug*/
-	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(currentFd) + CRESET " disconnected.\n");
+	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(fd) + CRESET " disconnected.\n");
+	/* End of debug */
+	this->_printServerInfos();
+}
+
+void	Server::_removeUserFromChannels(int fd) {
+	User	*user = findUserByFd(fd);
+
+	if (!user)
+		return ;
+	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		Channel	*channel = it->second;
+
+		if (channel->isInChannel(user))
+			channel->removeUser(user);
+	}
+}
+
+void	Server::_removeEmptyChannels(void) {
+	std::string	debugLog;
+	int			removedChannels = 0;
+
+	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		Channel *channel = it->second;
+
+		if (channel->getUsers().size() == 0) {
+			delete channel;
+			this->_channels.erase(it);
+			removedChannels++;
+		}
+	}
+	if (removedChannels == 0)
+		return ;
+	/* Start of debug */
+	debugLog.append(Utils::toString(SERVER_INFO) + "Removed " BCYN + Utils::toString(removedChannels) + CRESET " empty channel(s).\n");
+	IRCLogger::getInstance()->queue(debugLog);
 	/* End of debug */
 	this->_printServerInfos();
 }
@@ -268,6 +304,7 @@ void	Server::run(void) {
 			}
 			++it;
 		}
+		this->_removeEmptyChannels();
 		IRCLogger::getInstance()->printQueue(); // printing debug queue
 	}
 	this->broadcast("Server closed");

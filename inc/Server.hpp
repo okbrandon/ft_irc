@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 11:37:57 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/04 10:16:27 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ class Server {
 		bool		_createUserConnection(void);
 		bool		_handleUserConnection(std::vector<pollfd>::iterator &it);
 		bool		_handlePollOut(std::vector<pollfd>::iterator &it);
-		void		_addUser(int userSocket, struct sockaddr_in userAddr);
-		void		_removeUser(int currentFd, std::vector<pollfd>::iterator &it);
+		void		_addUser(int fd, struct sockaddr_in userAddr);
+		void		_removeUser(int fd, std::vector<pollfd>::iterator &it);
+		void		_removeUserFromChannels(int fd);
+		void		_removeEmptyChannels(void);
 		void		_parseReceived(int fd, std::string message);
 		void		_printServerInfos(void);
 
