@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/01 10:03:07 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/04 10:07:04 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ void	Server::_printServerInfos(void) {
 		User	user = it->second;
 
 		ss << " " << std::left << std::setw(10) << user.getSocket()
-			<< " " << std::left << std::setw(10) << user.getNickname()
-			<< " " << std::left << std::setw(10) << user.getHost()
+			<< " " << std::left << std::setw(10) << Utils::fixWidth(user.getNickname(), 10)
+			<< " " << std::left << std::setw(10) << Utils::fixWidth(user.getHost(), 10)
 			<< " " << std::left << std::setw(10) << user.getPort()
 			<< " " << std::left << std::endl;
 		clientTitle = ss.str();
@@ -162,7 +162,7 @@ void	Server::_printServerInfos(void) {
 	serverInfos.append(clientInfos);
 	/* Printing infos */
 	std::cout << serverInfos << std::endl;
-	std::cout << "channels size: " << this->_channels.size() << std::endl;
+	std::cout << "There are currently " BYEL << this->_channels.size() << CRESET " channels." << std::endl;
 }
 
 bool	Server::_handlePollOut(std::vector<pollfd>::iterator &it) {
