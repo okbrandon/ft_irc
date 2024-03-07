@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:52:44 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/01 10:02:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:54:31 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ Channel::Channel(void) {}
 Channel::Channel(std::string name) {
 	this->_name = name;
 	this->_key = "";
+	this->_limit = 0;
+	this->addMode('n');
 }
 
 Channel::Channel(Channel const &origin) {
@@ -114,6 +116,18 @@ std::string	Channel::getName(void) const {
 
 std::string	Channel::getTopic(void) const {
 	return (this->_topic);
+}
+
+std::string	Channel::getModeString(void) const {
+	std::string modeString = "+";
+
+	for (size_t i = 0; i < this->_modes.size(); i++)
+		modeString.push_back(this->_modes.at(i));
+	if (this->hasMode('k'))
+		modeString.append(" " + this->_key);
+	if (this->hasMode('l'))
+		modeString.append(" " + Utils::toString(this->_limit));
+	return (modeString);
 }
 
 std::vector<char>	Channel::getModes(void) const {

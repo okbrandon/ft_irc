@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:38:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/23 12:12:51 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:12:48 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ class Channel {
 		std::string					getName(void) const;
 		std::string					getKey(void) const;
 		std::string					getTopic(void) const;
+		std::string					getModeString(void) const;
 		std::vector<char>			getModes(void) const;
 		std::vector<User*>			getUsers(void) const;
 		std::vector<User*>			getOperators(void) const;
