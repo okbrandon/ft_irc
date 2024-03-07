@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:13 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/27 11:17:45 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:51:21 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ InviteCommand::InviteCommand(void) : ACommand("INVITE") {}
 InviteCommand::~InviteCommand(void) {}
 
 void	InviteCommand::execute(void) const {
-	if (this->_args.size() < 3)
-		throw ERR_NEEDMOREPARAMS(this->_name);
+	std::string userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 
-	User	*target = this->_server->findUserByName(this->_args[1]);
-	Channel *channel = this->_server->findChannelByName(this->_args[2]);
+	if (this->_args.size() < 3)
+		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
+
+	User		*target = this->_server->findUserByName(this->_args[1]);
+	Channel		*channel = this->_server->findChannelByName(this->_args[2]);
 
 	if (!target)
-		throw ERR_NOSUCHNICK(this->_args[1]);
+		throw ERR_NOSUCHNICK(userId, this->_user->getNickname(), this->_args[1]);
 
 	if (!channel) { // channel is inexistant, creating one
 		Channel *newChannel = new Channel(this->_args[2]);
@@ -35,16 +37,15 @@ void	InviteCommand::execute(void) const {
 		channel = newChannel;
 	}
 	if (!channel->isInChannel(this->_user))
-		throw ERR_NOTONCHANNEL(channel->getName());
+		throw ERR_NOTONCHANNEL(userId, this->_user->getNickname(), channel->getName());
 	if (channel->hasMode('i') && !channel->isOperator(this->_user))
-		throw ERR_CHANOPRIVSNEEDED(this->_args[2]);
+		throw ERR_CHANOPRIVSNEEDED(userId, this->_user->getNickname(), this->_args[2]);
 
 	if (!channel->isInChannel(target)) {
-		std::string userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 		std::string	response = userId + " INVITE " + target->getNickname() + " " + channel->getName() + "\r\n";
 
 		target->addSendBuffer(response);
-		this->_user->addSendBuffer(RPL_INVITING(channel->getName(), target->getNickname()));
+		this->_user->addSendBuffer(RPL_INVITING(userId, this->_user->getNickname(), channel->getName(), target->getNickname()));
 		channel->addUser(target);
 	}
 }

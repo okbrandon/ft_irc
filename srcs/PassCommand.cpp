@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:49:41 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/07 17:07:00 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:00:48 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ PassCommand::PassCommand(void) : ACommand("PASS") {}
 PassCommand::~PassCommand(void) {}
 
 void	PassCommand::execute(void) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+
 	if (this->_user->hasSentPassword())
-		throw ERR_ALREADYREGISTRED;
+		throw ERR_ALREADYREGISTRED(userId, this->_user->getNickname());
 	if (this->_args.size() < 2)
-		throw ERR_NEEDMOREPARAMS(this->_name);
+		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
 	if (this->_args[1].compare(this->_server->getPassword()))
-		throw ERR_PASSWDMISMATCH;
+		throw ERR_PASSWDMISMATCH(userId, this->_user->getNickname());
 	
 	this->_user->setSentPassword(true);
 	this->_user->addSendBuffer(": Password is correct, you may now identify yourself with ");

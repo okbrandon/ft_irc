@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:15:06 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/01 09:50:59 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:52:36 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ std::string	JoinCommand::_getChannelMode(Channel *channel) const {
 }
 
 void	JoinCommand::execute(void) const {
+	std::string				userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+
 	if (this->_args.size() < 2 || this->_args.size() > 4)
-		throw ERR_NEEDMOREPARAMS(this->_name);
+		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
 	if (!this->_args.at(1).compare("0")) {
 		return ; // unsupported yet, should leave all channels
 	}
@@ -63,7 +65,7 @@ void	JoinCommand::execute(void) const {
 		std::string	channelName = *channelsIt;
 
 		if (channelName.at(0) != '#') {
-			this->_user->addSendBuffer(ERR_BADCHANMASK(channelName));
+			this->_user->addSendBuffer(ERR_BADCHANMASK(userId, this->_user->getNickname(), channelName));
 			continue ;
 		}
 
@@ -85,30 +87,29 @@ void	JoinCommand::execute(void) const {
 		}
 		else { // channel is existing, continuing process
 			if (channel->hasMode('k') && channel->getKey() != key) { // channel is key protected
-				this->_user->addSendBuffer(ERR_BADCHANNELKEY(channelName));
+				this->_user->addSendBuffer(ERR_BADCHANNELKEY(userId, this->_user->getNickname(), channelName));
 				continue ;
 			}
 			if (channel->hasMode('l')) { // channel has user limit
 				if (channel->getUsers().size() >= channel->getLimit()) {
-					this->_user->addSendBuffer(ERR_CHANNELISFULL(channelName));
+					this->_user->addSendBuffer(ERR_CHANNELISFULL(userId, this->_user->getNickname(), channelName));
 					continue ;
 				}
 			}
 			if (channel->hasMode('i')) { // channel is invite-only
-				this->_user->addSendBuffer(ERR_INVITEONLYCHAN(channelName)); // unsupported yet
+				this->_user->addSendBuffer(ERR_INVITEONLYCHAN(userId, this->_user->getNickname(), channelName)); // unsupported yet
 				continue ;
 			}
 			channel->addUser(this->_user);
 		}
-		std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 		std::string	channelMode = this->_getChannelMode(channel);
 		std::string	userList = this->_getStringifiedUsers(channel);
 
 		channel->broadcast(userId + " JOIN :" + channelName + "\r\n");
 		if (!channel->getTopic().empty())
-			this->_user->addSendBuffer(RPL_TOPIC(this->_user->getUsername(), channelName, channel->getTopic()));
-		this->_user->addSendBuffer(RPL_NAMREPLY(this->_user->getUsername(), "=", channelName, userList));
-		this->_user->addSendBuffer(RPL_ENDOFNAMES(this->_user->getNickname(), channelName));
-		this->_user->addSendBuffer(userId + " MODE " + channelName + channelMode + "\r\n");
+			this->_user->addSendBuffer(RPL_TOPIC(userId, this->_user->getNickname(), channelName, channel->getTopic()));
+		this->_user->addSendBuffer(RPL_NAMREPLY(userId, this->_user->getNickname(), "=", channelName, userList));
+		this->_user->addSendBuffer(RPL_ENDOFNAMES(userId, this->_user->getNickname(), channelName));
+		this->_user->addSendBuffer(RPL_CHANNELMODEIS(userId, this->_user->getNickname(), channelName, channel->getModeString()));
 	}
 }

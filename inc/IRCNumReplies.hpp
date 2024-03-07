@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/23 11:47:00 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:54:45 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,32 @@
 
 # define USER_IDENTIFIER(nickname, username) (":" + nickname + "!" + username + "@localhost")
 
-# define RPL_WELCOME(nickname, user_id) (":localhost 001 " + nickname + " :Welcome to the Internet Relay Network " + user_id + "\r\n")
-# define RPL_YOURHOST(user, servername, version) (":localhost 002 " + user + " :Your host is " + servername + " (localhost), running version " + version + "\r\n")
-# define RPL_CREATED(user, date) (":localhost 003 " + user + " :This server was created " + date + "\r\n")
-# define RPL_TOPIC(user, channel, topic) (":localhost 332 " + user + " " + channel + " :" + topic + "\r\n")
-# define RPL_NOTOPIC(user, channel) (":localhost 331 " + user + " " + channel + " :No topic is set." + "\r\n")
-# define RPL_NAMREPLY(user, channelMode, channel, userList) ("353 " + user + " " + channelMode + " " + channel + " :" + userList + "\r\n")
-# define RPL_ENDOFNAMES(user, channel) ("366 " + user + " " + channel + " :End of /NAMES list" + "\r\n")
-# define RPL_INVITING(nickname, channel) (":localhost 341 " + nickname + " " + channel + "\r\n")
+# define RPL_WELCOME(user_id, nickname) (user_id + " 001 " + nickname + " :Welcome to the Internet Relay Network " + user_id + "\r\n")
+# define RPL_YOURHOST(user_id, nickname, servername, version) (user_id + " 002 " + nickname + " :Your host is " + servername + " (localhost), running version " + version + "\r\n")
+# define RPL_CREATED(user_id, nickname, date) (user_id + " 003 " + nickname + " :This server was created " + date + "\r\n")
+# define RPL_TOPIC(user_id, nickname, channel, topic) (user_id + " 332 " + nickname + " " + channel + " :" + topic + "\r\n")
+# define RPL_NOTOPIC(user_id, nickname, channel) (user_id + " 331 " + nickname + " " + channel + " :No topic is set." + "\r\n")
+# define RPL_NAMREPLY(user_id, nickname, channelMode, channel, userList) (user_id + " 353 " + nickname + " " + channelMode + " " + channel + " :" + userList + "\r\n")
+# define RPL_ENDOFNAMES(user_id, nickname, channel) (user_id + " 366 " + nickname + " " + channel + " :End of /NAMES list" + "\r\n")
+# define RPL_INVITING(user_id, nickname, channel, requested) (user_id + " 341 " + nickname + " " + channel + " " + requested + "\r\n")
+# define RPL_CHANNELMODEIS(user_id, nickname, channel, mode) (user_id + " 324 " + nickname + " " + channel + " " + mode + "\r\n") // removed params
 
-# define ERR_NOSUCHNICK(nickname) ("401 * " + nickname + " :No such nick/channel" + "\r\n")
-# define ERR_NOSUCHCHANNEL(channel) ("403 * " + channel + " :No such channel" + "\r\n")
-# define ERR_USERNOTINCHANNEL(channel, nickname) ("441 * " + channel + " " + nickname + " :They aren't on that channel" + "\r\n")
-# define ERR_CHANOPRIVSNEEDED(channel) ("482 * " + channel + " :You're not channel operator" + "\r\n")
-# define ERR_NORECIPIENT(command) ("411 * " + command + " :No recipient given" + "\r\n")
-# define ERR_NOTONCHANNEL(channel) ("442 * " + channel + " :You're not on that channel" + "\r\n")
-# define ERR_NEEDMOREPARAMS(command) ("461 * " + command + " :Not enough parameters" + "\r\n")
-# define ERR_ALREADYREGISTRED "462 * :You may not reregister\r\n"
-# define ERR_PASSWDMISMATCH "464 * :Password incorrect\r\n"
-# define ERR_NONICKNAMEGIVEN "431 * :No nickname given\r\n"
-# define ERR_ERRONEUSNICKNAME(nickname) ("432 * : " + nickname + " :Erroneus nickname" + "\r\n")
-# define ERR_NICKNAMEINUSE(nickname) ("433 * : " + nickname + " :Nickname is already in use" + "\r\n")
-# define ERR_CHANNELISFULL(channel) ("471 * : " + channel + " :Cannot join channel (+l)" + "\r\n")
-# define ERR_INVITEONLYCHAN(channel) ("473 * : " + channel + " :Cannot join channel (+i)" + "\r\n")
-# define ERR_BADCHANMASK(channel) ("476 * : " + channel + " :Incorrect format" + "\r\n")
-# define ERR_BADCHANNELKEY(channel) ("475 * : " + channel + " :Cannot join channel (+k)" + "\r\n")
+# define ERR_NOSUCHNICK(user_id, nickname, requested) (user_id + " 401 " + nickname + " " + requested + " :No such nick/channel" + "\r\n")
+# define ERR_NOSUCHCHANNEL(user_id, nickname, channel) (user_id + " 403 " + nickname + " " + channel + " :No such channel" + "\r\n")
+# define ERR_USERNOTINCHANNEL(user_id, nickname, channel, requested) (user_id + " 441 " + nickname + " " + channel + " " + requested + " :They aren't on that channel" + "\r\n")
+# define ERR_NORECIPIENT(user_id, nickname, command) (user_id + " 411 " + nickname + " " + command + " :No recipient given" + "\r\n")
+# define ERR_NOTONCHANNEL(user_id, nickname, channel) (user_id + " 442 " + nickname + " " + channel + " :You're not on that channel" + "\r\n")
+# define ERR_NEEDMOREPARAMS(user_id, nickname, command) (user_id + " 461 " + nickname + " " + command + " :Not enough parameters" + "\r\n")
+# define ERR_ALREADYREGISTRED(user_id, nickname) (user_id + " 462 " + nickname + " :You may not reregister" + "\r\n")
+# define ERR_PASSWDMISMATCH(user_id, nickname) (user_id + " 464 " + nickname + " :Password incorrect" + "\r\n")
+# define ERR_NONICKNAMEGIVEN(user_id, nickname) (user_id + " 431 " + nickname + " :No nickname given" + "\r\n")
+# define ERR_ERRONEUSNICKNAME(user_id, nickname, requested) (user_id + " 432 " + nickname + " " + requested + " :Erroneus nickname" + "\r\n")
+# define ERR_NICKNAMEINUSE(user_id, nickname, requested) (user_id + " 433 " + nickname + " " + requested + " :Nickname is already in use" + "\r\n")
+# define ERR_CHANNELISFULL(user_id, nickname, channel) (user_id + " 471 " + nickname + " " + channel + " :Cannot join channel (+l)" + "\r\n")
+# define ERR_UNKNOWNMODE(user_id, nickname, modeChar) (user_id + " 472 " + nickname + " " + modeChar + " :is unknown mode char to me" + "\r\n")
+# define ERR_INVITEONLYCHAN(user_id, nickname, channel) (user_id + " 473 " + nickname + " " + channel + " :Cannot join channel (+i)" + "\r\n")
+# define ERR_BADCHANMASK(user_id, nickname, channel) (user_id + " 476 " + nickname + " " + channel + " :Incorrect format" + "\r\n")
+# define ERR_BADCHANNELKEY(user_id, nickname, channel) (user_id + " 475 " + nickname + " " + channel + " :Cannot join channel (+k)" + "\r\n")
+# define ERR_CHANOPRIVSNEEDED(user_id, nickname, channel) (user_id + " 482 " + nickname + " " + channel + " :You're not channel operator" + "\r\n")
 
 #endif

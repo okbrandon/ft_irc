@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:02:05 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/27 11:19:12 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:04:57 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ std::string	UserCommand::_extractRealname(std::deque<std::string> args) const {
 }
 
 void	UserCommand::execute(void) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	std::string	username;
 	std::string	realname;
 
 	if (!this->_user->hasSentPassword())
 		throw ENTER_PASS_FIRST;
 	if (this->_args.size() < 5)
-		throw ERR_NEEDMOREPARAMS(this->_name);
+		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
 	if (this->_user->isRegistered())
-		throw ERR_ALREADYREGISTRED;
+		throw ERR_ALREADYREGISTRED(userId, this->_user->getNickname());
 	
 	username = this->_args[1];
 	realname = this->_extractRealname(this->_args);

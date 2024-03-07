@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:19:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/29 11:40:54 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:59:57 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ bool	NickCommand::_isValidNickname(std::string nickname) const {
 }
 
 void	NickCommand::execute(void) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	std::string	nickname;
 	static int	i;
 
 	if (!this->_user->hasSentPassword())
 		throw ENTER_PASS_FIRST;
 	if (this->_args.size() < 2)
-		throw ERR_NONICKNAMEGIVEN;
+		throw ERR_NONICKNAMEGIVEN(userId, this->_user->getNickname());
 
 	nickname = this->_args[1];
 	if (!this->_isValidNickname(nickname))
-		throw ERR_ERRONEUSNICKNAME(nickname);
+		throw ERR_ERRONEUSNICKNAME(userId, this->_user->getNickname(), nickname);
 	if (!this->_server->isNicknameAvailable(nickname)) {
 		if (this->_user->isRegistered())
-			throw ERR_NICKNAMEINUSE(nickname);
+			throw ERR_NICKNAMEINUSE(userId, this->_user->getNickname(), nickname);
 
 		nickname.append(Utils::toString(++i));
 		/* Start of debug */

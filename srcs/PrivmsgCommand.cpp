@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:14:33 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/27 16:17:57 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:05:46 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ PrivmsgCommand::PrivmsgCommand(void) : ACommand("PRIVMSG") {
 PrivmsgCommand::~PrivmsgCommand(void) {}
 
 bool	PrivmsgCommand::_sendChannelMessage(std::string channelName, std::string message) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	Channel	*channel = this->_server->findChannelByName(channelName);
 
 	if (!channel) {
-		this->_user->addSendBuffer(ERR_NOSUCHNICK(channelName));
+		this->_user->addSendBuffer(ERR_NOSUCHNICK(userId, this->_user->getNickname(), channelName));
 		return (false);
 	}
 	if (!channel->isInChannel(this->_user)) {
-		this->_user->addSendBuffer(ERR_NOTONCHANNEL(channelName));
+		this->_user->addSendBuffer(ERR_NOTONCHANNEL(userId, this->_user->getNickname(), channelName));
 		return (false);
 	}
 
-	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	std::string response = userId + " " + this->getCalledCommand() + " " + channelName + " " + message + "\r\n";
 
 	channel->excludeBroadcast(response, this->_user);
@@ -38,14 +38,14 @@ bool	PrivmsgCommand::_sendChannelMessage(std::string channelName, std::string me
 }
 
 bool	PrivmsgCommand::_sendUserMessage(std::string nickName, std::string message) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	User	*target = this->_server->findUserByName(nickName);
 
 	if (!target) {
-		this->_user->addSendBuffer(ERR_NOSUCHNICK(nickName));
+		this->_user->addSendBuffer(ERR_NOSUCHNICK(userId, this->_user->getNickname(), nickName));
 		return (false);
 	}
 
-	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	std::string response = userId + " " + this->getCalledCommand() + " " + target->getNickname() + " " + message + "\r\n";
 
 	target->addSendBuffer(response);
@@ -64,17 +64,18 @@ std::string	PrivmsgCommand::_getMessage(void) const {
 }
 
 void	PrivmsgCommand::execute(void) const {
+	std::string				userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 	std::deque<std::string>	recipients;
 	std::string				message;
 
 	if (this->_args.size() < 3) {
-		this->_user->addSendBuffer(ERR_NORECIPIENT(this->_name));
+		this->_user->addSendBuffer(ERR_NORECIPIENT(userId, this->_user->getNickname(), this->_name));
 		return ;
 	}
 	
 	recipients = Utils::split(this->_args[1], ",");
 	if (recipients.size() == 0) {
-		this->_user->addSendBuffer(ERR_NORECIPIENT(this->_name));
+		this->_user->addSendBuffer(ERR_NORECIPIENT(userId, this->_user->getNickname(), this->_name));
 		return ;
 	}
 
