@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/03/01 14:31:55 by evmorvan         ###   ########.fr        #
+#    Updated: 2024/03/07 11:44:39 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,12 +77,6 @@ ${OBJS}:		| ${OBJ_DIR}
 
 ${OBJ_DIR}:
 	@mkdir ${OBJ_DIR}
-
-debug:
-	@make DEBUG=1 re
-
-logs:
-	@make WLOGS=true re
 
 clean:
 	@${RM} ${OBJ_DIR}
