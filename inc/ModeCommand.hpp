@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ModeCommand.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:44 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/02/26 09:57:45 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/07 09:11:32 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "IRCDepends.hpp"
 
 class ModeCommand : public ACommand {
+
+	private:
+		bool		_addMode(Channel *channel) const;
+		bool		_removeMode(Channel *channel) const;
 
 	public:
 		ModeCommand(void);
