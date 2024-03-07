@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketHandler.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:48:08 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/07 11:48:09 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/03/07 11:48:08 by evmorvan          #+#    #+#             */
+/*   Updated: 2024/03/07 11:48:09 by evmorvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

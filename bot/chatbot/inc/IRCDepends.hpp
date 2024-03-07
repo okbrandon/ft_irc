@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCDepends.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:45:51 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/07 12:09:59 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/03/07 11:45:51 by evmorvan          #+#    #+#             */
+/*   Updated: 2024/03/07 12:09:59 by evmorvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

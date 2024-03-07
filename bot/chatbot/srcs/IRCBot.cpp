@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCBot.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:51:28 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/07 12:10:17 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
+/*   Updated: 2024/03/07 12:10:17 by evmorvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

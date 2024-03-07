@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HttpRequest.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:51:24 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/07 12:09:04 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/03/07 11:51:24 by evmorvan          #+#    #+#             */
+/*   Updated: 2024/03/07 12:09:04 by evmorvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
