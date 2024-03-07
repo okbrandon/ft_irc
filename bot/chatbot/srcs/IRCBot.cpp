@@ -1,16 +1,26 @@
-#include "../inc/IrcBot.hpp"
-#include <iostream>
-#include <cstring>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   IRCBot.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 11:51:28 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/03/07 12:10:17 by bsoubaig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/IRCBot.hpp"
 
 const int MAX_BUFFER_SIZE = 1024;
 
-IrcBot::IrcBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(443) { }
+IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(443) { }
     
-void IrcBot::connect(const char* server, const char* password, const char* channel) {
+void IRCBot::connect(const char* server, const char* password, const char* channel) {
     _socketHandler.createSocket();
     _socketHandler.connectSocket(server);
 
-    if (password != nullptr && strlen(password) > 0) {
+    if (password != NULL && strlen(password) > 0) {
         std::string passMsg = "PASS ";
         passMsg += password;
         passMsg += "\r\n";
@@ -27,11 +37,11 @@ void IrcBot::connect(const char* server, const char* password, const char* chann
     receiveMsg(); 
 }
 
-void IrcBot::sendMsg(const char* message) {
+void IRCBot::sendMsg(const char* message) {
     sendMessage(_socketHandler.getSocket(), message, strlen(message), 0);
 }
 
-void IrcBot::receiveMsg() {
+void IRCBot::receiveMsg() {
     char buffer[MAX_BUFFER_SIZE];
     while (true) {
         ssize_t bytesRead = recv(_socketHandler.getSocket(), buffer, sizeof(buffer), 0);
@@ -45,14 +55,14 @@ void IrcBot::receiveMsg() {
     }
 }
 
-void IrcBot::sendMessage(int socket, const char* message, size_t length, int flags) {
+void IRCBot::sendMessage(int socket, const char* message, size_t length, int flags) {
     ssize_t bytesSent = send(socket, message, length, flags);
     if (bytesSent == -1) {
         perror("Error sending message");
     }
 }
 
-void IrcBot::handleMessage(const std::string& raw) {
+void IRCBot::handleMessage(const std::string& raw) {
     if (raw.find("PING") != std::string::npos) {
         std::string pongMsg = "PONG\r\n";
         std::cout << "Sending PONG" << std::endl;

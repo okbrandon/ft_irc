@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   SocketHandler.hpp                                  :+:      :+:    :+:   */
+/*   Utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:48:08 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/07 11:48:09 by bsoubaig         ###   ########.fr       */
+/*   Created: 2024/03/07 11:55:24 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/03/07 12:02:20 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOCKETHANDLER_H
-# define SOCKETHANDLER_H
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
 # include "IRCDepends.hpp"
 
-class SocketHandler {
+class Utils {
 
-    private:
-        int         _socket;
-        sockaddr_in _address;
-        int         _port; 
-    
-    public:
-        SocketHandler(int port);
-        ~SocketHandler(void);
+	public:
+		static std::string	getCompletionJson(const std::string& nickname, const std::string& channel, const std::string& message);
+		template <class T> static std::string	toString(const T &value) {
+			std::ostringstream oss;
 
-        void    createSocket(void);
-        void    connectSocket(std::string addr);
-        void    closeSocket(void);
-        int     getSocket(void) const;
+			oss << value;
+			return (oss.str());
+		}
+
 };
 
 #endif

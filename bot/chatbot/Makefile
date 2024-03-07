@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/03/07 11:44:39 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/03/07 12:10:28 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ NAME			= ircbot
 
 SRC_DIR			= ./srcs/
 SRCS			= main.cpp \
+				  Utils.cpp \
 				  HttpRequest.cpp \
-				  IrcBot.cpp \
-				  JsonBuilder.cpp \
 				  SocketHandler.cpp \
+				  IRCBot.cpp \
 
 OBJ_DIR			= ./objs/
 OBJS			= ${addprefix ${OBJ_DIR}, ${SRCS:.cpp=.o}}

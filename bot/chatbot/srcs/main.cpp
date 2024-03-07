@@ -1,6 +1,16 @@
-#include <cstdlib>
-#include <iostream>
-#include "../inc/IrcBot.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 11:51:33 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/03/07 11:51:34 by bsoubaig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/IRCBot.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc != 5) {
@@ -13,7 +23,7 @@ int main(int argc, char* argv[]) {
     const char* password = argv[3];
     const char* channel = argv[4];
 
-    IrcBot bot(port);
+    IRCBot bot(port);
     bot.connect(server, password, channel);
 
     return EXIT_SUCCESS;

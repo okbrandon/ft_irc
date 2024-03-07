@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   SocketHandler.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 11:51:36 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/03/07 11:51:37 by bsoubaig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/SocketHandler.hpp"
-#include <iostream>
 
 SocketHandler::SocketHandler(int port) : _socket(-1), _port(port) { }
 

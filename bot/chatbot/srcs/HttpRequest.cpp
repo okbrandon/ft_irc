@@ -1,22 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HttpRequest.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 11:51:24 by bsoubaig          #+#    #+#             */
+/*   Updated: 2024/03/07 12:09:04 by bsoubaig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/HttpRequest.hpp"
-#include <string>
-#include <iostream>
-#include <cstring>
 
 const int MAX_BUFFER_SIZE = 1024;
 
-HttpRequest::HttpRequest(int port) : _socketHandler(port) { }
+HttpRequest::HttpRequest(int port) {
+    this->_socketHandler = new SocketHandler(port);
+}
+
+HttpRequest::~HttpRequest(void) {
+    delete this->_socketHandler;
+}
 
 std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::string& channel, const std::string& message) {
-    _socketHandler.createSocket();
-    _socketHandler.connectSocket("https://api.evan.sh/api/v1/chat");
+    _socketHandler->createSocket();
+    _socketHandler->connectSocket("https://api.evan.sh/api/v1/chat");
 
-    std::string jsonPayload = _jsonBuilder.getCompletionJson(nickname, channel, message);
+    std::string jsonPayload = Utils::getCompletionJson(nickname, channel, message);
 
     _request = "POST /api/v1/chat HTTP/1.1\r\n"
                "Host: api.evan.sh\r\n"
                "Content-Type: application/json\r\n"
-               "Content-Length: " + std::to_string(jsonPayload.length()) + "\r\n"
+               "Content-Length: " + Utils::toString(jsonPayload.length()) + "\r\n"
                "User-Agent: Booty\r\n" +
                "\r\n" +
                jsonPayload;
@@ -24,13 +39,13 @@ std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::
     sendRequest();
     std::string response = receiveResponse();
 
-    _socketHandler.closeSocket();
+    _socketHandler->closeSocket();
 
     return response;
 }
 
 void HttpRequest::sendRequest() {
-    send(_socketHandler.getSocket(), _request.c_str(), _request.length(), 0);
+    send(_socketHandler->getSocket(), _request.c_str(), _request.length(), 0);
 }
 
 std::string HttpRequest::receiveResponse() {
@@ -38,7 +53,7 @@ std::string HttpRequest::receiveResponse() {
     std::string response;
 
     while (true) {
-        ssize_t bytesRead = recv(_socketHandler.getSocket(), buffer, sizeof(buffer), 0);
+        ssize_t bytesRead = recv(_socketHandler->getSocket(), buffer, sizeof(buffer), 0);
         if (bytesRead <= 0) {
             std::cerr << "Error receiving response from API server.\n";
             break;
@@ -48,7 +63,7 @@ std::string HttpRequest::receiveResponse() {
         response += buffer;
 
         // Assuming the response ends with '\r\n\r\n' to indicate the end of the HTTP header
-        if (strstr(response.c_str(), "\r\n\r\n") != nullptr) {
+        if (strstr(response.c_str(), "\r\n\r\n") != NULL) {
             break;
         }
     }
