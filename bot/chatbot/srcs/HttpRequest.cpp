@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HttpRequest.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:24 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/07 12:09:04 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:12:01 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ HttpRequest::~HttpRequest(void) {
 
 std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::string& channel, const std::string& message) {
     _socketHandler->createSocket();
-    _socketHandler->connectSocket("https://api.evan.sh/api/v1/chat");
+    _socketHandler->connectSocket("23.169.88.99");
 
     std::string jsonPayload = Utils::getCompletionJson(nickname, channel, message);
 
     _request = "POST /api/v1/chat HTTP/1.1\r\n"
-               "Host: api.evan.sh\r\n"
+               "Host: 23.169.88.99\r\n"
                "Content-Type: application/json\r\n"
                "Content-Length: " + Utils::toString(jsonPayload.length()) + "\r\n"
                "User-Agent: Booty\r\n" +

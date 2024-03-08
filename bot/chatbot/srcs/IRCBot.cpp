@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCBot.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/07 12:10:17 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:11:34 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 const int MAX_BUFFER_SIZE = 1024;
 
-IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(443) { }
+IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(8080) { }
     
 void IRCBot::connect(const char* server, const char* password, const char* channel) {
     _socketHandler.createSocket();
