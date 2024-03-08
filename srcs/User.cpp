@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/05 10:29:56 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:56:10 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	User::tryRegister(Server *server) {
 
 	this->_registered = true;
 	this->addSendBuffer(RPL_WELCOME(userId, this->_nickname));
-	this->addSendBuffer(RPL_YOURHOST(userId, this->_nickname, "42FT_IRC", "1.0"));
+	this->addSendBuffer(RPL_YOURHOST(userId, this->_nickname, SERVER_NAME, SERVER_VERSION));
 	this->addSendBuffer(RPL_CREATED(userId, this->_nickname, server->getCreationDate()));
 	(void) server; // voiding because compiler is dumb
 }
