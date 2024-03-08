@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketHandler.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:48:08 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/07 11:48:09 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:22:13 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ class SocketHandler {
     private:
         int         _socket;
         sockaddr_in _address;
-        int         _port; 
+        int         _port;
+
+        SocketHandler(void);
+        SocketHandler(const SocketHandler &origin);
+
+        SocketHandler   &operator=(const SocketHandler &origin);
     
     public:
         SocketHandler(int port);
@@ -30,6 +35,7 @@ class SocketHandler {
         void    connectSocket(std::string addr);
         void    closeSocket(void);
         int     getSocket(void) const;
+
 };
 
 #endif

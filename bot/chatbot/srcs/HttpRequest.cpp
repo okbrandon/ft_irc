@@ -6,49 +6,31 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:24 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 09:12:01 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:23:43 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/HttpRequest.hpp"
 
-const int MAX_BUFFER_SIZE = 1024;
+HttpRequest::HttpRequest(void) {}
 
 HttpRequest::HttpRequest(int port) {
     this->_socketHandler = new SocketHandler(port);
+}
+
+HttpRequest::HttpRequest(const HttpRequest &origin) {
+    *this = origin;
 }
 
 HttpRequest::~HttpRequest(void) {
     delete this->_socketHandler;
 }
 
-std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::string& channel, const std::string& message) {
-    _socketHandler->createSocket();
-    _socketHandler->connectSocket("23.169.88.99");
-
-    std::string jsonPayload = Utils::getCompletionJson(nickname, channel, message);
-
-    _request = "POST /api/v1/chat HTTP/1.1\r\n"
-               "Host: 23.169.88.99\r\n"
-               "Content-Type: application/json\r\n"
-               "Content-Length: " + Utils::toString(jsonPayload.length()) + "\r\n"
-               "User-Agent: Booty\r\n" +
-               "\r\n" +
-               jsonPayload;
-
-    sendRequest();
-    std::string response = receiveResponse();
-
-    _socketHandler->closeSocket();
-
-    return response;
-}
-
-void HttpRequest::sendRequest() {
+void HttpRequest::_sendRequest() {
     send(_socketHandler->getSocket(), _request.c_str(), _request.length(), 0);
 }
 
-std::string HttpRequest::receiveResponse() {
+std::string HttpRequest::_receiveResponse() {
     char buffer[MAX_BUFFER_SIZE];
     std::string response;
 
@@ -83,4 +65,32 @@ std::string HttpRequest::receiveResponse() {
         }
     }
     return "Hello! I'm currently unavailable. Please call back later.";
+}
+
+std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::string& channel, const std::string& message) {
+    _socketHandler->createSocket();
+    _socketHandler->connectSocket("23.169.88.99");
+
+    std::string jsonPayload = Utils::getCompletionJson(nickname, channel, message);
+
+    _request = "POST /api/v1/chat HTTP/1.1\r\n"
+               "Host: 23.169.88.99\r\n"
+               "Content-Type: application/json\r\n"
+               "Content-Length: " + Utils::toString(jsonPayload.length()) + "\r\n"
+               "User-Agent: Booty\r\n" +
+               "\r\n" +
+               jsonPayload;
+
+    _sendRequest();
+    std::string response = _receiveResponse();
+
+    _socketHandler->closeSocket();
+
+    return response;
+}
+
+HttpRequest &HttpRequest::operator=(const HttpRequest &origin) {
+    this->_request = origin._request;
+    this->_socketHandler = origin._socketHandler;
+    return (*this);
 }

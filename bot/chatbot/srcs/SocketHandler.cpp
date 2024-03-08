@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   SocketHandler.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:36 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/07 11:51:37 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:22:19 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/SocketHandler.hpp"
 
-SocketHandler::SocketHandler(int port) : _socket(-1), _port(port) { }
+SocketHandler::SocketHandler(void) {}
+
+SocketHandler::SocketHandler(int port) : _socket(-1), _port(port) {}
+
+SocketHandler::SocketHandler(const SocketHandler &origin) {
+    *this = origin;
+}
 
 SocketHandler::~SocketHandler() {
     closeSocket();
@@ -48,4 +54,11 @@ void SocketHandler::closeSocket() {
 
 int SocketHandler::getSocket() const {
     return _socket;
+}
+
+SocketHandler   &SocketHandler::operator=(const SocketHandler &origin) {
+    this->_address = origin._address;
+    this->_port = origin._port;
+    this->_socket = origin._socket;
+    return (*this);
 }

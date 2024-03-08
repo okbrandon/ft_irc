@@ -6,19 +6,29 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 09:11:34 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:25:44 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCBot.hpp"
 
-const int MAX_BUFFER_SIZE = 1024;
+IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty") {
+    this->_socketHandler = new SocketHandler(port);
+    this->_httpRequest = new HttpRequest(8080);
+}
 
-IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty"), _socketHandler(port), _httpRequest(8080) { }
-    
+IRCBot::IRCBot(const IRCBot &origin) {
+    *this = origin;
+}
+
+IRCBot::~IRCBot(void) {
+    delete this->_socketHandler;
+    delete this->_httpRequest;
+}
+
 void IRCBot::connect(const char* server, const char* password, const char* channel) {
-    _socketHandler.createSocket();
-    _socketHandler.connectSocket(server);
+    _socketHandler->createSocket();
+    _socketHandler->connectSocket(server);
 
     if (password != NULL && strlen(password) > 0) {
         std::string passMsg = "PASS ";
@@ -38,13 +48,13 @@ void IRCBot::connect(const char* server, const char* password, const char* chann
 }
 
 void IRCBot::sendMsg(const char* message) {
-    sendMessage(_socketHandler.getSocket(), message, strlen(message), 0);
+    sendMessage(_socketHandler->getSocket(), message, strlen(message), 0);
 }
 
 void IRCBot::receiveMsg() {
     char buffer[MAX_BUFFER_SIZE];
     while (true) {
-        ssize_t bytesRead = recv(_socketHandler.getSocket(), buffer, sizeof(buffer), 0);
+        ssize_t bytesRead = recv(_socketHandler->getSocket(), buffer, sizeof(buffer), 0);
         if (bytesRead <= 0) {
             std::cerr << "Connection closed or error occurred.\n";
             break;
@@ -66,7 +76,7 @@ void IRCBot::handleMessage(const std::string& raw) {
     if (raw.find("PING") != std::string::npos) {
         std::string pongMsg = "PONG\r\n";
         std::cout << "Sending PONG" << std::endl;
-        sendMessage(_socketHandler.getSocket(), pongMsg.c_str(), pongMsg.length(), 0);
+        sendMessage(_socketHandler->getSocket(), pongMsg.c_str(), pongMsg.length(), 0);
         return;
     }
 
@@ -82,9 +92,17 @@ void IRCBot::handleMessage(const std::string& raw) {
     
         message.erase(message.find_last_not_of(" \n\r\t") + 1);
 
-        std::string completion = _httpRequest.getAPIResponse(nickname, channel, message);
+        std::string completion = _httpRequest->getAPIResponse(nickname, channel, message);
         
         std::string response = "PRIVMSG " + channel + " :" + completion + "\r\n";
-        sendMessage(_socketHandler.getSocket(), response.c_str(), response.length(), 0);
+        sendMessage(_socketHandler->getSocket(), response.c_str(), response.length(), 0);
     }
+}
+
+IRCBot  &IRCBot::operator=(const IRCBot &origin) {
+    this->_nickname = origin._nickname;
+    this->_realname = origin._realname;
+    this->_username = origin._username;
+    this->_socketHandler = origin._socketHandler;
+    return (*this);
 }

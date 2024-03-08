@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRCDepends.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evmorvan <evmorvan@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:51 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/07 12:09:59 by evmorvan         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:27:01 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@
 # include "Utils.hpp"
 # include "SocketHandler.hpp"
 # include "HttpRequest.hpp"
+
+const int MAX_BUFFER_SIZE = 1024;
 
 #endif
