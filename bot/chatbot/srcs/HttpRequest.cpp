@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:24 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 10:23:43 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:29:37 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ std::string HttpRequest::_receiveResponse() {
             }
         }
     }
-    return "Hello! I'm currently unavailable. Please call back later.";
+    return "Hello! I'm currently unavailable. Please call back later.\r\n";
 }
 
 std::string HttpRequest::getAPIResponse(const std::string& nickname, const std::string& channel, const std::string& message) {
