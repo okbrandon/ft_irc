@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 10:37:33 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:42:50 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void IRCBot::connect(const char* server, const char* password, const char* chann
     std::string nickMsg = "NICK " + _nickname + "\r\n";
     std::string userMsg = "USER " + _username + " 0 :" + _realname + "\r\n";
     std::string joinMsg = "JOIN " + std::string(channel) + "\r\n";
+    std::string topicMsg = "TOPIC " + std::string(channel) + " This channel has AI powered answers.\r\n";
+    
     sendMsg(nickMsg.c_str());
     sendMsg(userMsg.c_str());
     sendMsg(joinMsg.c_str());
-
+    sendMsg(topicMsg.c_str());
     receiveMsg(); 
 }
 
