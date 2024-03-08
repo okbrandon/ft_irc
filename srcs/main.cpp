@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:52:31 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/02/28 11:19:02 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:51:55 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	_handleSignal(int signal) {
 
 int	main(int argc, char **argv) {
 	if (argc != 3) {
-		std::cerr << "Invalid args." << std::endl;
+		std::cerr << "Invalid args.\n./ircserv <port> <password>" << std::endl;
 		return (1);
 	}
 	if (!_isPortValid(argv[1])) {
