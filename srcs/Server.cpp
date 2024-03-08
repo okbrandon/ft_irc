@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/04 11:49:17 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:09:34 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ Server::Server(const std::string &hostname, int port, const std::string &passwor
 	this->_password = password;
 	this->_polls.reserve(MAX_CONNECTIONS);
 	this->_listenerSocket = _createSocket();
+	this->_lastLogin = "nobody";
+	this->_lastLogout = "nobody";
 	this->_executor = new Executor(this);
 }
 
@@ -141,6 +143,17 @@ void	Server::_printServerInfos(void) {
 	ss.clear();
 	ss.str(std::string());
 	/* ClientInfos */
+	if (this->_users.empty()) {
+		ss << " " << std::left << std::setw(10) << "-"
+			<< " " << std::left << std::setw(10) << "-"
+			<< " " << std::left << std::setw(10) << "-"
+			<< " " << std::left << std::setw(10) << "-"
+			<< " " << std::left << std::endl;
+		clientTitle = ss.str();
+		clientInfos.append(clientTitle);
+		ss.clear();
+		ss.str(std::string());
+	}
 	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
 		User	user = it->second;
 
@@ -157,12 +170,13 @@ void	Server::_printServerInfos(void) {
 	/* Making server infos message */
 	for (int i = 0; i < 50; i++)
 		serverInfos.append("\n");
-	serverInfos.append("Welcome! Displaying " BCYN "IRCServer" CRESET " informations...\n\n");
+	serverInfos.append("Welcome! Displaying " BCYN SERVER_NAME CRESET " informations...\n\n");
 	serverInfos.append(serverTitle);
 	serverInfos.append(clientInfos);
 	/* Printing infos */
 	std::cout << serverInfos << std::endl;
 	std::cout << "There are currently " BYEL << this->_channels.size() << CRESET " channels." << std::endl;
+	std::cout << "Last login: " BYEL << this->_lastLogin << CRESET " | Last logout: " BYEL << this->_lastLogout << CRESET << std::endl;
 }
 
 bool	Server::_handlePollOut(std::vector<pollfd>::iterator &it) {
@@ -189,6 +203,7 @@ void	Server::_addUser(int fd, struct sockaddr_in userAddr) {
 	/* Start of debug */
 	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(fd) + CRESET " connected.\n");
 	/* End of debug */
+	this->_lastLogin = Utils::toString(fd);
 	this->_printServerInfos();
 }
 
@@ -201,6 +216,7 @@ void	Server::_removeUser(int fd, std::vector<pollfd>::iterator &it) {
 	/* Start of debug*/
 	IRCLogger::getInstance()->queue(Utils::toString(SERVER_INFO) + "Client " BCYN + Utils::toString(fd) + CRESET " disconnected.\n");
 	/* End of debug */
+	this->_lastLogout = Utils::toString(fd);
 	this->_printServerInfos();
 }
 
@@ -402,6 +418,8 @@ Server	&Server::operator=(const Server &origin) {
 	this->_hostname = origin._hostname;
 	this->_password = origin._password;
 	this->_port = origin._port;
+	this->_lastLogin = origin._lastLogin;
+	this->_lastLogout = origin._lastLogout;
 	this->_listenerSocket = origin._listenerSocket;
 	return (*this);
 }

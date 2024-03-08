@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/04 10:16:27 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:09:09 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ class Server {
 		std::string						_password;
 		int								_port;
 		int								_listenerSocket;
+		std::string						_lastLogin;
+		std::string						_lastLogout;
 		Executor						*_executor;
 
 		/* Private constructor */
 		Server(void);
+		Server(const Server &origin);
 
 		/* Private functions */
 		std::string	_createTimestamp(void);
@@ -55,10 +58,12 @@ class Server {
 		void		_parseReceived(int fd, std::string message);
 		void		_printServerInfos(void);
 
+		/* Overloaded operators */
+		Server	&operator=(const Server &origin);
+
 	public:
 		/* Constructors & Destructors */
 		Server(const std::string &hostname, int port, const std::string &password);
-		Server(const Server &origin);
 		~Server(void);
 
 		/* Functions */
@@ -77,9 +82,6 @@ class Server {
 		std::string	getPassword(void) const;
 		int			getPort(void) const;
 		int			getListenerSocket(void) const;
-
-		/* Overloaded operators */
-		Server	&operator=(const Server &origin);
 
 };
 
