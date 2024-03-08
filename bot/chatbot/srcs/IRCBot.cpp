@@ -6,13 +6,16 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 10:25:44 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:37:33 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/IRCBot.hpp"
 
-IRCBot::IRCBot(int port) : _nickname("Booty"), _realname("booty") {
+IRCBot::IRCBot(int port) {
+    this->_nickname = "Booty";
+    this->_username = "Booty";
+    this->_realname = "Booty The Bot";
     this->_socketHandler = new SocketHandler(port);
     this->_httpRequest = new HttpRequest(8080);
 }
@@ -38,7 +41,7 @@ void IRCBot::connect(const char* server, const char* password, const char* chann
     }
 
     std::string nickMsg = "NICK " + _nickname + "\r\n";
-    std::string userMsg = "USER " + _username + " 0 * :" + _realname + "\r\n";
+    std::string userMsg = "USER " + _username + " 0 :" + _realname + "\r\n";
     std::string joinMsg = "JOIN " + std::string(channel) + "\r\n";
     sendMsg(nickMsg.c_str());
     sendMsg(userMsg.c_str());
@@ -70,6 +73,7 @@ void IRCBot::sendMessage(int socket, const char* message, size_t length, int fla
     if (bytesSent == -1) {
         perror("Error sending message");
     }
+    std::cout << "Reply sent!" << std::endl;
 }
 
 void IRCBot::handleMessage(const std::string& raw) {
@@ -91,6 +95,8 @@ void IRCBot::handleMessage(const std::string& raw) {
         std::string message = raw.substr(messagePos + 1);
     
         message.erase(message.find_last_not_of(" \n\r\t") + 1);
+
+        std::cout << "Handling message from '" << nickname << "' in channel '" << channel << "'..." << std::endl;
 
         std::string completion = _httpRequest->getAPIResponse(nickname, channel, message);
         
