@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:45:46 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/08 09:56:10 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:57:36 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	User::sendDirectMessage(std::string message) {
 	if (send(this->_socket, message.c_str(), message.size(), 0) < 0)
 		throw std::runtime_error("Cannot send bytes to user");
 	/* Start of debug */
-	debugLog.append(Utils::toString(USER_INFO) + BRED "[FORCE] " CRESET + "Sending " BCYN + Utils::toString(this->_sendBuffer.size()) + CRESET " bytes to " + Utils::toString(this->_socket) + "...\n");
+	debugLog.append(Utils::toString(USER_INFO) + BRED "[FORCE] " CRESET + "Sending " BCYN + Utils::toString(message.size()) + CRESET " bytes to " + Utils::toString(this->_socket) + "...\n");
 	debugLog.append(" - SENT {" BCYN + Utils::removeEndOccurrence(message, "\r\n") + CRESET "}\n");
 	IRCLogger::getInstance()->queue(debugLog);
 	/* End of debug */
