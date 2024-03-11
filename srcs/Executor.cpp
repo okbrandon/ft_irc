@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 16:17:40 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:31:28 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../inc/TopicCommand.hpp"
 #include "../inc/ModeCommand.hpp"
 #include "../inc/PartCommand.hpp"
+#include "../inc/QuitCommand.hpp"
 
 Executor::Executor(void) {}
 
@@ -54,6 +55,7 @@ void	Executor::_registerCommands(void) {
 	this->_commands.push_back(new TopicCommand());
 	this->_commands.push_back(new ModeCommand());
 	this->_commands.push_back(new PartCommand());
+	this->_commands.push_back(new QuitCommand());
 }
 
 bool	Executor::_isRegisteredCommand(std::string input) {

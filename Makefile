@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/03/11 16:17:50 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/03/11 17:31:18 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS			= Utils.cpp \
 				  JoinCommand.cpp \
 				  PrivmsgCommand.cpp \
 				  PartCommand.cpp \
+				  QuitCommand.cpp \
 				  Executor.cpp \
 				  IRCLogger.cpp \
 				  main.cpp \
