@@ -6,7 +6,7 @@
 #    By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 17:45:22 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/03/11 17:31:18 by bsoubaig         ###   ########.fr        #
+#    Updated: 2024/03/11 18:00:40 by bsoubaig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,26 +23,26 @@ CLEAR			= \r\033[K
 NAME			= ircserv
 
 SRC_DIR			= ./srcs/
-SRCS			= Utils.cpp \
-				  User.cpp \
-				  Server.cpp \
-				  Channel.cpp \
-				  ACommand.cpp \
-				  PassCommand.cpp \
-				  NickCommand.cpp \
-				  UserCommand.cpp \
-				  PingCommand.cpp \
-				  KickCommand.cpp \
-				  InviteCommand.cpp \
-				  TopicCommand.cpp \
-				  ModeCommand.cpp \
-				  CapCommand.cpp \
-				  JoinCommand.cpp \
-				  PrivmsgCommand.cpp \
-				  PartCommand.cpp \
-				  QuitCommand.cpp \
+SRCS			= entities/User.cpp \
+				  entities/Server.cpp \
+				  entities/Channel.cpp \
+				  commands/ACommand.cpp \
+				  commands/PassCommand.cpp \
+				  commands/NickCommand.cpp \
+				  commands/UserCommand.cpp \
+				  commands/PingCommand.cpp \
+				  commands/KickCommand.cpp \
+				  commands/InviteCommand.cpp \
+				  commands/TopicCommand.cpp \
+				  commands/ModeCommand.cpp \
+				  commands/CapCommand.cpp \
+				  commands/JoinCommand.cpp \
+				  commands/PrivmsgCommand.cpp \
+				  commands/PartCommand.cpp \
+				  commands/QuitCommand.cpp \
 				  Executor.cpp \
 				  IRCLogger.cpp \
+				  Utils.cpp \
 				  main.cpp \
 
 OBJ_DIR			= ./objs/
@@ -92,7 +92,8 @@ $(NAME): 		$(OBJS)
 ${OBJS}:		| ${OBJ_DIR}
 
 ${OBJ_DIR}:
-	@mkdir ${OBJ_DIR}
+	@mkdir -p ${OBJ_DIR}/entities
+	@mkdir -p ${OBJ_DIR}/commands
 
 debug:
 	@make DEBUG=1 re

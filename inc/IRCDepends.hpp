@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/08 09:56:04 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:56:08 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@
 
 # include "IRCNumReplies.hpp"
 # include "Utils.hpp"
-# include "User.hpp"
-# include "Channel.hpp"
-# include "Server.hpp"
-# include "ACommand.hpp"
+# include "entities/User.hpp"
+# include "entities/Channel.hpp"
+# include "entities/Server.hpp"
+# include "commands/ACommand.hpp"
 # include "Executor.hpp"
 # include "IRCLogger.hpp"
 

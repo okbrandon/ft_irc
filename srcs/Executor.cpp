@@ -6,24 +6,24 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:31:28 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:58:06 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Executor.hpp"
-#include "../inc/PassCommand.hpp"
-#include "../inc/NickCommand.hpp"
-#include "../inc/UserCommand.hpp"
-#include "../inc/PingCommand.hpp"
-#include "../inc/CapCommand.hpp"
-#include "../inc/JoinCommand.hpp"
-#include "../inc/PrivmsgCommand.hpp"
-#include "../inc/KickCommand.hpp"
-#include "../inc/InviteCommand.hpp"
-#include "../inc/TopicCommand.hpp"
-#include "../inc/ModeCommand.hpp"
-#include "../inc/PartCommand.hpp"
-#include "../inc/QuitCommand.hpp"
+#include "../inc/commands/PassCommand.hpp"
+#include "../inc/commands/NickCommand.hpp"
+#include "../inc/commands/UserCommand.hpp"
+#include "../inc/commands/PingCommand.hpp"
+#include "../inc/commands/CapCommand.hpp"
+#include "../inc/commands/JoinCommand.hpp"
+#include "../inc/commands/PrivmsgCommand.hpp"
+#include "../inc/commands/KickCommand.hpp"
+#include "../inc/commands/InviteCommand.hpp"
+#include "../inc/commands/TopicCommand.hpp"
+#include "../inc/commands/ModeCommand.hpp"
+#include "../inc/commands/PartCommand.hpp"
+#include "../inc/commands/QuitCommand.hpp"
 
 Executor::Executor(void) {}
 
