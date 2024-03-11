@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/08 10:09:09 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:34:24 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ class Server {
 		User	*findUserByFd(int fd);
 		User	*findUserByName(std::string name);
 		Channel	*findChannelByName(std::string name);
+		Channel	*findChannelByUser(User *user);
 		bool	isNicknameAvailable(std::string nickname);
 
 		/* Getters & Setters */

@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/08 10:09:34 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:36:12 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,6 +376,17 @@ Channel	*Server::findChannelByName(std::string name) {
 	if (it == this->_channels.end())
 		return (NULL);
 	return (it->second);
+}
+
+Channel	*Server::findChannelByUser(User *user) {
+	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		Channel	*channel = it->second;
+
+		if (!channel->isInChannel(user))
+			continue ;
+		return (channel);
+	}
+	return (NULL);
 }
 
 bool	Server::isNicknameAvailable(std::string nickname) {
