@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:15:06 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:47 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:55:56 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,29 @@ std::string	JoinCommand::_getChannelMode(Channel *channel) const {
 	return (mode);
 }
 
+void	JoinCommand::_leaveAllChannels(void) const {
+	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
+	std::map<std::string, Channel*>	channels = this->_server->getChannelsWhereUser(this->_user);
+
+	if (channels.empty())
+		return ;
+
+	for (std::map<std::string, Channel*>::iterator it = channels.begin(); it != channels.end(); it++) {
+		Channel		*channel = it->second;
+		std::string response = userId + " PART " + channel->getName() + " :Left all channels" + "\r\n";
+
+		channel->broadcast(response);
+	}
+}
+
 void	JoinCommand::execute(void) const {
 	std::string				userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
 
 	if (this->_args.size() < 2 || this->_args.size() > 4)
 		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
 	if (!this->_args.at(1).compare("0")) {
-		return ; // unsupported yet, should leave all channels
+		this->_leaveAllChannels();
+		return ;
 	}
 
 	std::deque<std::string>	channels = Utils::split(this->_args[1], ",");
