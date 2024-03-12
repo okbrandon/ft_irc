@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:30:10 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:06 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:46:10 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ QuitCommand::~QuitCommand(void) {}
 
 void	QuitCommand::execute(void) const {
 	std::string	userId = USER_IDENTIFIER(this->_user->getNickname(), this->_user->getUsername());
-	Channel	*channel = this->_server->findChannelByUser(this->_user);
+	std::map<std::string, Channel*>	channels = this->_server->getChannelsWhereUser(this->_user);
 
-	if (!channel)
+	if (channels.empty())
 		return ;
 	
 	std::string	reason;
@@ -31,5 +31,10 @@ void	QuitCommand::execute(void) const {
 	}
 
 	std::string	response = userId + " QUIT " + (reason.empty() ? ":Client Quit" : reason) + "\r\n";
-	channel->broadcast(response);
+
+	for (std::map<std::string, Channel*>::iterator it = channels.begin(); it != channels.end(); it++) {
+		Channel	*channel = it->second;
+
+		channel->broadcast(response);
+	}
 }

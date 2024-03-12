@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:28 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:44:07 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,17 +378,6 @@ Channel	*Server::findChannelByName(std::string name) {
 	return (it->second);
 }
 
-Channel	*Server::findChannelByUser(User *user) {
-	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
-		Channel	*channel = it->second;
-
-		if (!channel->isInChannel(user))
-			continue ;
-		return (channel);
-	}
-	return (NULL);
-}
-
 bool	Server::isNicknameAvailable(std::string nickname) {
 	for (std::map<int, User>::iterator it = this->_users.begin(); it != this->_users.end(); it++) {
 		User	user = it->second;
@@ -397,6 +386,19 @@ bool	Server::isNicknameAvailable(std::string nickname) {
 			return (false);
 	}
 	return (true);
+}
+
+std::map<std::string, Channel*>	Server::getChannelsWhereUser(User *user) {
+	std::map<std::string, Channel*>	channels;
+
+	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		Channel	*channel = it->second;
+
+		if (!channel->isInChannel(user))
+			continue ;
+		channels[channel->getName()] = channel;
+	}
+	return (channels);
 }
 
 /* Getters & Setters */

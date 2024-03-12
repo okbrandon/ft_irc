@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:49:59 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:55:41 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:41:58 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ class Server {
 		~Server(void);
 
 		/* Functions */
-		void	run(void);
-		void	broadcast(std::string message);
-		void	addChannel(Channel *channel);
-		void	removeChannel(std::string channelName);
-		User	*findUserByFd(int fd);
-		User	*findUserByName(std::string name);
-		Channel	*findChannelByName(std::string name);
-		Channel	*findChannelByUser(User *user);
-		bool	isNicknameAvailable(std::string nickname);
+		void							run(void);
+		void							broadcast(std::string message);
+		void							addChannel(Channel *channel);
+		void							removeChannel(std::string channelName);
+		User							*findUserByFd(int fd);
+		User							*findUserByName(std::string name);
+		Channel							*findChannelByName(std::string name);
+		bool							isNicknameAvailable(std::string nickname);
+		std::map<std::string, Channel*>	getChannelsWhereUser(User *user);
 
 		/* Getters & Setters */
 		std::string	getCreationDate(void) const;
