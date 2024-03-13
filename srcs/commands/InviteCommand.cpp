@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:13 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:45 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:23:32 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	InviteCommand::execute(void) const {
 
 		target->addSendBuffer(response);
 		this->_user->addSendBuffer(RPL_INVITING(userId, this->_user->getNickname(), channel->getName(), target->getNickname()));
-		channel->addUser(target);
+		if (!channel->isInvited(target))
+			channel->addInvitation(target);
 	}
 }

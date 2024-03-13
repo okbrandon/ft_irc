@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:15:06 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/12 11:55:56 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:24:16 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	JoinCommand::execute(void) const {
 					continue ;
 				}
 			}
-			if (channel->hasMode('i')) { // channel is invite-only
+			if (channel->hasMode('i') && !channel->isInvited(this->_user)) { // channel is invite-only
 				this->_user->addSendBuffer(ERR_INVITEONLYCHAN(userId, this->_user->getNickname(), channelName)); // unsupported yet
 				continue ;
 			}
@@ -127,5 +127,7 @@ void	JoinCommand::execute(void) const {
 		this->_user->addSendBuffer(RPL_NAMREPLY(userId, this->_user->getNickname(), "=", channelName, userList));
 		this->_user->addSendBuffer(RPL_ENDOFNAMES(userId, this->_user->getNickname(), channelName));
 		this->_user->addSendBuffer(RPL_CHANNELMODEIS(userId, this->_user->getNickname(), channelName, channel->getModeString()));
+		if (channel->isInvited(this->_user))
+			channel->removeInvitation(this->_user);
 	}
 }
