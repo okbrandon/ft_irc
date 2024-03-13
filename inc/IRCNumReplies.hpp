@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:22 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/05 10:54:45 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:56:41 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define RPL_ENDOFNAMES(user_id, nickname, channel) (user_id + " 366 " + nickname + " " + channel + " :End of /NAMES list" + "\r\n")
 # define RPL_INVITING(user_id, nickname, channel, requested) (user_id + " 341 " + nickname + " " + channel + " " + requested + "\r\n")
 # define RPL_CHANNELMODEIS(user_id, nickname, channel, mode) (user_id + " 324 " + nickname + " " + channel + " " + mode + "\r\n") // removed params
+# define RPL_UMODEIS(user_id, nickname, mode) (user_id + " 221 " + nickname + " " + mode + "\r\n")
 
 # define ERR_NOSUCHNICK(user_id, nickname, requested) (user_id + " 401 " + nickname + " " + requested + " :No such nick/channel" + "\r\n")
 # define ERR_NOSUCHCHANNEL(user_id, nickname, channel) (user_id + " 403 " + nickname + " " + channel + " :No such channel" + "\r\n")

@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:57:18 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:50 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:57:00 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,10 @@ void	ModeCommand::execute(void) const {
 
 	if (this->_args.size() < 2)
 		throw ERR_NEEDMOREPARAMS(userId, this->_user->getNickname(), this->_name);
+	if (this->_args[1].at(0) != '#' && !this->_args[1].compare(this->_user->getNickname())) {
+		this->_user->addSendBuffer(RPL_UMODEIS(userId, this->_user->getNickname(), "+wi"));
+		return ;
+	}
 
 	Channel		*channel = this->_server->findChannelByName(this->_args[1]);
 
