@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:58 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:08 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:26:39 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@
 # define USER_KO            BRED "[User] " CRESET
 
 # define ENTER_PASS_FIRST   BRED "Please enter the password first." CRESET
+# define SERVER_FULL_MSG	BRED "Server is full!" CRESET
 
 # ifndef LOGS
 #  define LOGS false

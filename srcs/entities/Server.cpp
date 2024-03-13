@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/12 11:44:07 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:25:53 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Server::Server(const std::string &hostname, int port, const std::string &passwor
 	this->_hostname = hostname;
 	this->_port = port;
 	this->_password = password;
-	this->_polls.reserve(MAX_CONNECTIONS);
+	this->_polls.reserve(MAX_CONNECTIONS + 1);
 	this->_listenerSocket = _createSocket();
 	this->_lastLogin = "nobody";
 	this->_lastLogout = "nobody";
@@ -83,7 +83,9 @@ bool	Server::_createUserConnection(void) {
 		return (false);
 	}
 	if (this->_polls.size() - 1 >= MAX_CONNECTIONS) {
-		// Server is full, should send a message to user before kicking
+		// Server is full
+		std::string	message = std::string(SERVER_FULL_MSG);
+		send(userSocket, message.c_str(), message.length(), 0);
 		close(userSocket);
 	} else {
 		this->_addUser(userSocket, userAddr);
