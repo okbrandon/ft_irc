@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:52:26 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/13 10:25:53 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:25:55 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,16 +236,23 @@ void	Server::_removeUserFromChannels(int fd) {
 }
 
 void	Server::_removeEmptyChannels(void) {
-	std::string	debugLog;
-	int			removedChannels = 0;
+	std::map<std::string, Channel*>::iterator	currentIt = this->_channels.begin();
+	std::map<std::string, Channel*>::iterator	nextIt;
+	std::string									debugLog;
+	int											removedChannels = 0;
 
-	for (std::map<std::string, Channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
-		Channel *channel = it->second;
+	while (currentIt != this->_channels.end()) {
+		nextIt = currentIt;
+		++nextIt;
+
+		Channel *channel = currentIt->second;
 
 		if (channel->getUsers().size() == 0) {
 			delete channel;
-			this->_channels.erase(it);
+			this->_channels.erase(currentIt++);
 			removedChannels++;
+		} else {
+			currentIt = nextIt;
 		}
 	}
 	if (removedChannels == 0)
