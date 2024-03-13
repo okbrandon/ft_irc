@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:38:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:55:33 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:54:32 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Channel {
 		std::vector<char>			_modes;
 		std::vector<User*>			_users;
 		std::vector<User*>			_operators;
+		std::vector<std::string>	_inviteList;
 		std::vector<std::string>	_conversation;
 		unsigned int				_limit;
 		User						*_owner;
@@ -47,6 +48,8 @@ class Channel {
 		void	removeUser(User *user);
 		void	addOperator(User *user);
 		void	removeOperator(User *user);
+		void	addInvitation(User *user);
+		void	removeInvitation(User *user);
 		void	broadcast(std::string message);
 		void	excludeBroadcast(std::string message, User *excluded);
 
@@ -65,6 +68,7 @@ class Channel {
 		bool						isInChannel(User *user);
 		bool						isKeyProtected(void) const;
 		bool						hasMode(char mode) const;
+		bool						isInvited(User *user) const;
 
 		/* Setters */
 		void	setKey(std::string key);

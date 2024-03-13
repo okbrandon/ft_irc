@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:52:44 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:16 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:27:26 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ Channel::~Channel(void) {
 	this->_users.clear();
 	this->_operators.clear();
 	this->_modes.clear();
+	this->_inviteList.clear();
 	this->_conversation.clear();
 }
 
@@ -83,6 +84,20 @@ void	Channel::removeOperator(User *user) {
 			return ;
 		}
 	}
+}
+
+void	Channel::addInvitation(User *user) {
+	if (std::find(this->_inviteList.begin(), this->_inviteList.end(), user->getNickname()) != this->_inviteList.end())
+		return ;
+	this->_inviteList.push_back(user->getNickname());
+}
+
+void	Channel::removeInvitation(User *user) {
+	std::vector<std::string>::iterator	it = std::find(this->_inviteList.begin(), this->_inviteList.end(), user->getNickname());
+
+	if (it == this->_inviteList.end())
+		return ;
+	this->_inviteList.erase(it);
 }
 
 void	Channel::broadcast(std::string message) {
@@ -172,6 +187,10 @@ bool	Channel::isKeyProtected(void) const {
 
 bool	Channel::hasMode(char mode) const {
 	return (std::find(this->_modes.begin(), this->_modes.end(), mode) != this->_modes.end());
+}
+
+bool	Channel::isInvited(User *user) const {
+	return (std::find(this->_inviteList.begin(), this->_inviteList.end(), user->getNickname()) != this->_inviteList.end());
 }
 
 /* Setters */
