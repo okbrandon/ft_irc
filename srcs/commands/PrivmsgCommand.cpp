@@ -6,14 +6,14 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:14:33 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:02 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:06:37 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/commands/PrivmsgCommand.hpp"
 
 PrivmsgCommand::PrivmsgCommand(void) : ACommand("PRIVMSG") {
-	this->addAliase("NOTICE");
+	this->addAlias("NOTICE");
 }
 
 PrivmsgCommand::~PrivmsgCommand(void) {}

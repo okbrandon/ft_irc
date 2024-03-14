@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:29:15 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:58:06 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:05:58 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	Executor::_isRegisteredCommand(std::string input) {
 	for (std::deque<ACommand*>::iterator it = this->_commands.begin(); it != this->_commands.end(); it++) {
 		ACommand	*command = *it;
 
-		if (!command->getName().compare(input) || command->hasAliase(input))
+		if (!command->getName().compare(input) || command->hasAlias(input))
 			return (true);
 	}
 	return (false);
@@ -77,7 +77,7 @@ void	Executor::processCommand(User *user, std::deque<std::string> commandArgs) {
 	for (std::deque<ACommand*>::iterator it = this->_commands.begin(); it != this->_commands.end(); it++) {
 		ACommand	*command = *it;
 
-		if (!command->getName().compare(commandName) || command->hasAliase(commandName)) {
+		if (!command->getName().compare(commandName) || command->hasAlias(commandName)) {
 			command->setServer(this->_server);
 			command->setUser(user);
 			command->setArgs(commandArgs);

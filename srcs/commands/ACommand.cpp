@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:16 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:37 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:05:48 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	ACommand::setCalledCommand(std::string calledCommand) {
 	this->_calledCommand = calledCommand;
 }
 
-void	ACommand::addAliase(std::string aliase) {
+void	ACommand::addAlias(std::string aliase) {
 	this->_aliases.push_back(aliase);
 }
 
-bool	ACommand::hasAliase(std::string aliase) const {
-	if (std::find(this->_aliases.begin(), this->_aliases.end(), aliase) == this->_aliases.end())
+bool	ACommand::hasAlias(std::string alias) const {
+	if (std::find(this->_aliases.begin(), this->_aliases.end(), alias) == this->_aliases.end())
 		return (false);
 	return (true);
 }

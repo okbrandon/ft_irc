@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:30:13 by bsoubaig          #+#    #+#             */
-/*   Updated: 2024/03/11 17:54:43 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:05:52 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ class ACommand {
 		void	setUser(User *user);
 		void	setServer(Server *server);
 		void	setCalledCommand(std::string calledCommand);
-		void	addAliase(std::string aliase);
+		void	addAlias(std::string alias);
 
-		bool	hasAliase(std::string aliase) const;
+		bool	hasAlias(std::string alias) const;
 
 		virtual void	execute(void) const = 0;
 
