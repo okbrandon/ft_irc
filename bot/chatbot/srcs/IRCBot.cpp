@@ -6,7 +6,7 @@
 /*   By: bsoubaig <bsoubaig@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:51:28 by evmorvan          #+#    #+#             */
-/*   Updated: 2024/03/08 10:42:50 by bsoubaig         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:02:21 by bsoubaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void IRCBot::handleMessage(const std::string& raw) {
 
         std::string completion = _httpRequest->getAPIResponse(nickname, channel, message);
         
-        std::string response = "PRIVMSG " + channel + " :" + completion + "\r\n";
+        std::string response = "PRIVMSG " + channel + " :Replying to @" + nickname + ": " + completion + "\r\n";
         sendMessage(_socketHandler->getSocket(), response.c_str(), response.length(), 0);
     }
 }
