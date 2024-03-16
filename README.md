@@ -20,10 +20,10 @@
 
 ## 👨‍🏫 Quick demonstration
 
-https://github.com/okbrandon/ft_irc/assets/103316367/8359cad2-4526-43f4-b7f7-24c0212094e8
+https://github.com/okbrandon/ft_irc/assets/103316367/3aa1bc6b-85ec-4cf3-afa5-68ccafe1d2cc
 > Basic demonstration
 
-https://github.com/okbrandon/ft_irc/assets/103316367/2568c418-c344-4e15-8cea-1d96a4ac0db2
+https://github.com/okbrandon/ft_irc/assets/103316367/ba993be1-9db5-4872-84f0-c59d253fc1c2
 > Demonstration with our chatbot powered with OpenAI.
 
 ## 📦 Installation
