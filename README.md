@@ -66,7 +66,8 @@ The subject asks to implement the following commands: `KICK`, `TOPIC`, `INVITE` 
 We also implemented other commands such as: `PRIVMSG`, `CAP`, `JOIN`, `NICK`, `PART`, `PING`, `QUIT` and `USER`.
 
 When joining the server with our reference client, you should be automatically authentified.
-![welcome-img](https://github.com/okbrandon/ft_irc/assets/103316367/fdd441d1-7ea3-4e72-81d3-c24b9319cd83)
+![welcome-img](https://github.com/okbrandon/ft_irc/assets/103316367/de4f4611-b286-45e2-b866-c8d5759dd31d)
+
 From here you can send other commands, for instance if you want to create a channel or join an existing one use: `/JOIN myChannel`. Now you're inside a channel, you can send messages and do what ever you want on this wonderful server! :)
 ![inside-channel-img](https://github.com/okbrandon/ft_irc/assets/103316367/3052c1d7-8ae3-41f2-8ecc-32843c249cdd)
 
